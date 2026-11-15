@@ -1,21 +1,25 @@
 ---
-import { SITE } from '../site.config';
+import { SITE, BRAND, TAGLINE } from '../site.config';
 import { copy } from '../data/copy';
 
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const t = copy[lang];
 const prefix = lang === 'fr' ? '/' : '/en/';
-const nav = [
+const sections: Array<[string, string]> = [
   ['#studio', t.nav.studio],
   ['#projets', t.nav.projects],
   ['#methode', t.nav.process],
   ['#a-propos', t.nav.about],
-] as const;
+];
+// En mode portfolio, ni section Studio ni méthode : ce sont des arguments commerciaux.
+const nav = SITE.commercial
+  ? sections
+  : sections.filter(([href]) => href !== '#studio' && href !== '#methode');
 ---
 <header class="header">
   <div class="wrap header-inner">
-    <a class="brand" href={prefix} aria-label={SITE.brand}>
+    <a class="brand" href={prefix} aria-label={BRAND}>
       <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
         <path
           d="M12 1.6 13.9 9.1 21.4 11 13.9 12.9 12 20.4 10.1 12.9 2.6 11 10.1 9.1Z"
@@ -28,8 +32,8 @@ const nav = [
           </linearGradient>
         </defs>
       </svg>
-      <span>{SITE.brand}</span>
-      <span class="brand-sub">{SITE.brandTagline[lang]}</span>
+      <span>{BRAND}</span>
+      <span class="brand-sub">{TAGLINE[lang]}</span>
     </a>
 
     <nav class="nav" aria-label="Navigation">

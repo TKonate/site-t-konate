@@ -2,30 +2,52 @@
 import { SITE } from '../site.config';
 import { copy } from '../data/copy';
 import { projects } from '../data/projects';
+import { personal } from '../data/personal';
 import ContactForm from './ContactForm.astro';
 
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const t = copy[lang];
 const prefix = lang === 'fr' ? '/' : '/en/';
+/** Mode portfolio (commercial: false) ou mode entreprise (true). */
+const biz = SITE.commercial;
+const p = personal[lang];
+const hero = biz ? t.hero : p.hero;
+const contactCopy = biz ? t.contact : { title: p.contact.title, intro: p.contact.intro };
+const heroPrimaryHref = biz ? '#contact' : '#projets';
+const heroSecondaryHref = biz ? '#projets' : '#contact';
 
 const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 ---
 <section class="hero">
-  <div class="wrap hero-inner">
-    <p class="kicker">{t.hero.kicker}</p>
-    <h1>{t.hero.title}</h1>
-    <p class="lead">{t.hero.lead}</p>
+  <div class="wrap hero-grid">
+    <div class="hero-inner">
+    <p class="kicker">{hero.kicker}</p>
+    <h1>{hero.title}</h1>
+    <p class="lead">{hero.lead}</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href={`${prefix}#contact`}>{t.hero.ctaPrimary}</a>
-      <a class="btn" href={`${prefix}#projets`}>{t.hero.ctaSecondary}</a>
+      <a class="btn btn-primary" href={`${prefix}${heroPrimaryHref}`}>{hero.ctaPrimary}</a>
+      <a class="btn" href={`${prefix}${heroSecondaryHref}`}>{hero.ctaSecondary}</a>
     </div>
     <ul class="badges">
-      {t.hero.badges.map((b) => <li>{b}</li>)}
+      {hero.badges.map((b) => <li>{b}</li>)}
     </ul>
+    </div>
+
+    <aside class="hero-panel" aria-label={t.heroPanel.title}>
+      <p class="hero-panel-title">
+        <span class="dot"></span>{t.heroPanel.title}
+      </p>
+      <dl>
+        {t.heroPanel.rows.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
+      </dl>
+    </aside>
   </div>
 </section>
 
+{biz && (
 <section class="section" id="studio">
   <div class="wrap">
     <div class="section-head">
@@ -47,6 +69,7 @@ const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(B
     </div>
   </div>
 </section>
+)}
 
 <section class="section" id="projets">
   <div class="wrap">
@@ -89,6 +112,7 @@ const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(B
   </div>
 </section>
 
+{biz && (
 <section class="section" id="methode">
   <div class="wrap">
     <div class="section-head">
@@ -109,6 +133,7 @@ const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(B
     </div>
   </div>
 </section>
+)}
 
 <section class="section" id="a-propos">
   <div class="wrap about-grid">
@@ -134,8 +159,8 @@ const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(B
     <div>
       <div class="section-head" style="margin-bottom:22px">
         <p class="kicker">{t.nav.contact}</p>
-        <h2>{t.contact.title}</h2>
-        <p>{t.contact.intro}</p>
+        <h2>{contactCopy.title}</h2>
+        <p>{contactCopy.intro}</p>
       </div>
       <div class="contact-direct">
         <span class="muted" style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:.09em;text-transform:uppercase">
@@ -144,10 +169,12 @@ const list = [...projects].sort((a, b) => Number(Boolean(b.featured)) - Number(B
         <a class="mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
         <span class="muted" style="font-size:.88rem">{SITE.location[lang]}</span>
       </div>
-      <div class="availability">
-        <span class="pill">{t.contact.availability.pill}</span>
-        <p>{t.contact.availability.line}</p>
-      </div>
+      {biz && (
+        <div class="availability">
+          <span class="pill">{t.contact.availability.pill}</span>
+          <p>{t.contact.availability.line}</p>
+        </div>
+      )}
       <div class="socials">
         <a href={SITE.github} target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

@@ -2,9 +2,11 @@
 import Base from '../layouts/Base.astro';
 import HomePage from '../components/HomePage.astro';
 import { copy } from '../data/copy';
+import { personal } from '../data/personal';
+import { SITE } from '../site.config';
 
-const t = copy.fr;
+const meta = SITE.commercial ? copy.fr.meta : personal.fr.meta;
 ---
-<Base lang="fr" title={t.meta.title} description={t.meta.description}>
+<Base lang="fr" title={meta.title} description={meta.description}>
   <HomePage lang="fr" />
 </Base>

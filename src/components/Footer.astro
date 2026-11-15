@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../site.config';
+import { SITE, BRAND, STATUS_LINE } from '../site.config';
 import { copy } from '../data/copy';
 
 interface Props { lang: 'fr' | 'en' }
@@ -11,7 +11,7 @@ const legalHref = lang === 'fr' ? '/mentions-legales/' : '/mentions-legales/';
 <footer class="footer">
   <div class="wrap footer-inner">
     <div>
-      <strong>{SITE.brand}</strong> · {SITE.legal.status[lang]}
+      <strong>{BRAND}</strong> · {STATUS_LINE[lang]}
     </div>
     <div class="footer-legal">
       <span>© {year} {SITE.owner} — {t.footer.rights}</span>

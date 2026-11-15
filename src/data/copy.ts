@@ -8,6 +8,16 @@ export const copy = {
         "Studio d'automatisation par Tibério Konate : scripts Python, connecteurs API, workflows n8n et systèmes d'IA auto-hébergés. Diagnostic gratuit, livrables testés et documentés.",
     },
     nav: { studio: 'Studio', projects: 'Projets', process: 'Méthode', about: 'À propos', contact: 'Contact' },
+    heroPanel: {
+      title: 'état du dépôt',
+      rows: [
+        ['Dépôts publics', '7 · github.com/TKonate'],
+        ['Projet phare', 'ollama-inference-benchmarks'],
+        ['Infra', 'VPS CPU-only · Ollama · Cloudflare'],
+        ['Outils', 'Python · TypeScript · Docker'],
+        ['Ouvert à', 'collaborations et retours'],
+      ],
+    },
     hero: {
       kicker: 'Automatisation · Python · IA auto-hébergée',
       title: "J'automatise ce qui vous coûte du temps.",
@@ -145,6 +155,16 @@ export const copy = {
         'Automation studio by Tibério Konate: Python scripts, API connectors, n8n workflows and self-hosted AI systems. Free diagnostic, tested and documented deliverables.',
     },
     nav: { studio: 'Studio', projects: 'Projects', process: 'Process', about: 'About', contact: 'Contact' },
+    heroPanel: {
+      title: 'repo status',
+      rows: [
+        ['Public repos', '7 · github.com/TKonate'],
+        ['Flagship', 'ollama-inference-benchmarks'],
+        ['Infra', 'CPU-only VPS · Ollama · Cloudflare'],
+        ['Tools', 'Python · TypeScript · Docker'],
+        ['Open to', 'collaborations and feedback'],
+      ],
+    },
     hero: {
       kicker: 'Automation · Python · Self-hosted AI',
       title: 'I automate the work that eats your time.',

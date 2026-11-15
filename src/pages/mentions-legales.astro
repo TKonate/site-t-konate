@@ -1,12 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../site.config';
+import { SITE, BRAND } from '../site.config';
 
-const incomplete = !SITE.legal.siret || !SITE.legal.address;
+const biz = SITE.commercial;
+const incomplete = biz && (!SITE.legal.siret || !SITE.legal.address);
+const statusFr = biz ? SITE.legal.status.fr : 'Particulier — site personnel, sans activité commerciale';
 ---
 <Base
   lang="fr"
-  title={`Mentions légales — ${SITE.brand}`}
+  title={`Mentions légales — ${BRAND}`}
   description="Mentions légales, hébergement et traitement des données personnelles du site t-konate.dev."
 >
   <article class="wrap legal">
@@ -26,11 +28,20 @@ const incomplete = !SITE.legal.siret || !SITE.legal.address;
     <h2>Éditeur du site</h2>
     <ul>
       <li>{SITE.owner}</li>
-      <li>{SITE.legal.status.fr}</li>
+      <li>{statusFr}</li>
       {SITE.legal.siret && <li>SIRET : {SITE.legal.siret}</li>}
       {SITE.legal.address && <li>Adresse : {SITE.legal.address}</li>}
       <li>Contact : <a href={`mailto:${SITE.email}`} style="color:var(--accent)">{SITE.email}</a></li>
     </ul>
+
+    {
+      !biz && (
+        <p>
+          Ce site est un site personnel, non professionnel : il ne propose aucune prestation
+          payante, aucun service commercial et ne constitue pas une offre de vente.
+        </p>
+      )
+    }
 
     <h2>Hébergement</h2>
     <p>
@@ -51,10 +62,9 @@ const incomplete = !SITE.legal.siret || !SITE.legal.address;
       adresse email, structure (facultative) et message.
     </p>
     <ul>
-      <li><strong>Finalité :</strong> répondre à votre demande.</li>
+      <li><strong>Finalité :</strong> répondre à votre message.</li>
       <li>
-        <strong>Base légale :</strong> votre démarche volontaire de prise de contact (intérêt
-        légitime à traiter une demande commerciale).
+        <strong>Base légale :</strong> votre démarche volontaire de prise de contact.
       </li>
       <li>
         <strong>Destinataires :</strong> {SITE.owner} et le prestataire technique d'acheminement
