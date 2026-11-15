@@ -66,6 +66,27 @@ npx wrangler pages dev dist --port 8788 --binding RESEND_API_KEY=dummy
 Without `RESEND_API_KEY` the endpoint answers `503` and the front end shows a
 `mailto:` fallback — the form never silently drops a message.
 
+## Themes and accessibility
+
+- Colour tokens live in `src/styles/tokens.css`: dark by default, light when the
+  system asks for it (`prefers-color-scheme`), plus a manual toggle in the header
+  (auto → light → dark, persisted in `localStorage`).
+- Every text/background pair is checked against WCAG AA:
+  `python3 scripts/check-contrast.py` (fails with a non-zero exit code).
+- Full WCAG 2.0/2.1/2.2 A+AA audit with axe-core, on the built site:
+
+  ```bash
+  npm run build
+  cp node_modules/axe-core/axe.min.js dist/axe.min.js
+  npx astro preview    # then run axe from the browser console or CDP
+  ```
+
+  Last run: 0 violations on all pages, both themes.
+- Keyboard: skip link, visible focus ring, `aria-current` on the active section,
+  44px minimum touch targets, `prefers-reduced-motion` respected.
+- Illustrations are inline SVG (`src/data/art.ts`), themed by CSS variables, and
+  marked `aria-hidden` — purely decorative, no network request.
+
 ## Notes
 
 - No cookies, no analytics, no third-party font or script CDN.

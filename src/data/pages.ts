@@ -18,6 +18,10 @@ export const pages = {
       next: 'Projet suivant',
       statusWip: 'En cours',
       statusPublic: 'Public',
+      railYear: 'Année',
+      railKind: 'Type',
+      railStatus: 'Statut',
+      railRepo: 'Code',
     },
     about: {
       kicker: 'Profil',
@@ -61,6 +65,10 @@ export const pages = {
       next: 'Next project',
       statusWip: 'In progress',
       statusPublic: 'Public',
+      railYear: 'Year',
+      railKind: 'Type',
+      railStatus: 'Status',
+      railRepo: 'Code',
     },
     about: {
       kicker: 'Profile',

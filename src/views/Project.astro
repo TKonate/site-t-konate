@@ -2,6 +2,7 @@
 import { pages } from '../data/pages';
 import { projects, type Project } from '../data/projects';
 import { routes } from '../lib/routes';
+import { getArt } from '../data/art';
 
 interface Props { project: Project; lang: 'fr' | 'en' }
 const { project, lang } = Astro.props;
@@ -16,9 +17,6 @@ const next = projects[(idx + 1) % projects.length];
       <p class="kicker">{project.kind[lang]} · {project.year}</p>
       <h1 class="project-title">{project.name}</h1>
       <p class="page-lead">{project.pitch[lang]}</p>
-      <ul class="stack stack-lg">
-        {project.stack.map((s) => <li>{s}</li>)}
-      </ul>
       {project.url && (
         <p style="margin-top:22px">
           <a class="btn btn-primary" href={project.url} target="_blank" rel="noopener noreferrer">{p.repo} ↗</a>
@@ -28,6 +26,9 @@ const next = projects[(idx + 1) % projects.length];
   </header>
 
   <div class="wrap project-body">
+    <div class="project-main">
+    <div class="art project-art" aria-hidden="true" set:html={getArt(project.slug)}></div>
+
     <section class="block" data-reveal>
       <h2>{p.problem}</h2>
       <p>{project.problem[lang]}</p>
@@ -54,5 +55,17 @@ const next = projects[(idx + 1) % projects.length];
         </svg>
       </a>
     </nav>
+    </div>
+
+    <aside class="project-rail" aria-label={project.name}>
+      <dl class="facts">
+        <div><dt>{p.railYear}</dt><dd>{project.year}</dd></div>
+        <div><dt>{p.railKind}</dt><dd>{project.kind[lang]}</dd></div>
+        <div><dt>{p.railStatus}</dt><dd>{project.status === 'wip' ? p.statusWip : p.statusPublic}</dd></div>
+      </dl>
+      <ul class="stack stack-rail">
+        {project.stack.map((tech) => <li>{tech}</li>)}
+      </ul>
+    </aside>
   </div>
 </article>

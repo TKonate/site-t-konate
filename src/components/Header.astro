@@ -24,7 +24,7 @@ const ctaLabel = SITE.commercial
 ---
 <header class="header">
   <div class="wrap header-inner">
-    <a class="brand" href={routes.home[lang]} aria-label={BRAND}>
+    <a class="brand" href={routes.home[lang]}>
       <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 1.6 13.9 9.1 21.4 11 13.9 12.9 12 20.4 10.1 12.9 2.6 11 10.1 9.1Z" fill="url(#g)"/>
         <defs>
@@ -39,9 +39,11 @@ const ctaLabel = SITE.commercial
     </a>
 
     <nav class="nav" aria-label="Navigation">
-      {nav.map(([href, label], i) => (
-        <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a>
-      ))}
+      {nav.map(([href, label]) => {
+        const here = Astro.url.pathname;
+        const active = here === href || (href !== '/' && here.startsWith(href.replace(/\/$/, '/')));
+        return <a href={href} aria-current={active ? 'page' : undefined}>{label}</a>;
+      })}
     </nav>
 
     <div class="header-actions">
@@ -51,14 +53,24 @@ const ctaLabel = SITE.commercial
           data-set-lang="fr"
           aria-current={lang === 'fr' ? 'true' : 'false'}
           hreflang="fr"
-          aria-label="Français">FR</a>
+          aria-label="FR — Français">FR</a>
         <a
           href={altEn}
           data-set-lang="en"
           aria-current={lang === 'en' ? 'true' : 'false'}
           hreflang="en"
-          aria-label="English">EN</a>
+          aria-label="EN — English">EN</a>
       </div>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Changer de thème">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+        <span class="sr-only" data-theme-label>automatique</span>
+      </button>
       <a class="btn btn-primary btn-sm" href={`${routes.contact[lang]}`}>{ctaLabel}</a>
 
       <details class="nav-mobile">
