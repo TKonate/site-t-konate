@@ -10,8 +10,8 @@
   --line: rgba(255, 255, 255, 0.09);
   --line-strong: rgba(255, 255, 255, 0.16);
   --ink: #e9ecf1;
-  --ink-soft: #b3bccb;
-  --ink-mute: #8d97a8;
+  --ink-soft: #c0c8d6;
+  --ink-mute: #99a3b4;
   --accent: #7aa8ff;
   --accent-soft: rgba(122, 168, 255, 0.12);
   --accent-2: #b18cff;
@@ -427,7 +427,7 @@ p { margin: 0; }
 
 .project-year {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--ink-mute);
 }
 
@@ -447,7 +447,7 @@ p { margin: 0; }
 
 .stack li {
   font-family: var(--font-mono);
-  font-size: 0.73rem;
+  font-size: 0.75rem;
   padding: 3px 8px;
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -945,3 +945,444 @@ p { margin: 0; }
   font-size: 0.75rem;
   text-align: right;
 }
+
+/* ============================================================
+   v2 — pages intérieures, pages projet, animations
+   ============================================================ */
+
+/* --- transitions d'apparition (dégradation propre sans JS) --- */
+
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --- barre de progression de lecture --- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+/* --- aurora animée du hero --- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.aurora {
+  position: absolute;
+  inset: -30% -10% auto -10%;
+  height: 130%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(6px);
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
+  will-change: transform;
+}
+
+.aurora-blob.a1 {
+  width: 46vw;
+  height: 46vw;
+  left: -8%;
+  top: 6%;
+  background: radial-gradient(circle, rgba(122, 168, 255, 0.75), transparent 70%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.aurora-blob.a2 {
+  width: 34vw;
+  height: 34vw;
+  right: 4%;
+  top: -6%;
+  background: radial-gradient(circle, rgba(177, 140, 255, 0.6), transparent 70%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+.aurora-blob.a3 {
+  width: 26vw;
+  height: 26vw;
+  right: 26%;
+  bottom: -18%;
+  background: radial-gradient(circle, rgba(87, 217, 163, 0.32), transparent 70%);
+  animation: drift-c 38s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(6%, 4%, 0) scale(1.12); }
+}
+
+@keyframes drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to { transform: translate3d(-8%, 6%, 0) scale(0.94); }
+}
+
+@keyframes drift-c {
+  from { transform: translate3d(0, 0, 0) scale(0.96); }
+  to { transform: translate3d(4%, -6%, 0) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none; }
+}
+
+.hero-grid, .hero-inner { position: relative; z-index: 1; }
+
+/* --- en-tête de page intérieure --- */
+
+.page-hero {
+  padding-block: clamp(56px, 8vw, 104px) clamp(32px, 4vw, 52px);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  margin-block: 16px 0;
+  letter-spacing: -0.03em;
+}
+
+.page-lead {
+  margin-top: 20px;
+  max-width: 660px;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.page-meta {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* --- cartes projet cliquables --- */
+
+.project { cursor: pointer; }
+
+.project-link-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.project-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  transition: gap 0.2s var(--ease);
+}
+
+.project-cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s var(--ease);
+}
+
+.card.project:hover .project-cta svg { transform: translateX(4px); }
+.card.project:hover .project-cta { gap: 11px; }
+
+/* --- pied de section --- */
+
+.section-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 34px;
+}
+
+.link-quiet {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.link-quiet:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* --- page projet --- */
+
+.project-hero { border-bottom: 1px solid var(--line); }
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+  margin-bottom: 26px;
+  transition: color 0.18s var(--ease);
+}
+
+.back-link:hover { color: var(--accent); }
+
+.project-title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.55rem, 4vw, 2.5rem) !important;
+  letter-spacing: -0.02em !important;
+  word-break: break-word;
+}
+
+.stack-lg li { font-size: 0.75rem; padding: 5px 11px; }
+
+/* aligné sur la grille du hero : le texte est plus étroit, pas décalé */
+.project-body {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 24px;
+  padding-block: clamp(44px, 6vw, 76px);
+}
+
+.project-body > * { max-width: 730px; }
+
+.block { margin-bottom: clamp(40px, 5vw, 60px); }
+
+.block h2,
+.block-title {
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.block p {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.block-title { margin-top: 36px; }
+
+.points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.points li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.points li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: rotate(45deg);
+  opacity: 0.75;
+}
+
+.next-project {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.next-project a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  color: var(--ink);
+  transition: color 0.18s var(--ease), gap 0.2s var(--ease);
+}
+
+.next-project a:hover { color: var(--accent); gap: 16px; }
+.next-project svg { width: 18px; height: 18px; }
+
+/* --- boîte à outils (à propos) --- */
+
+.toolbox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 4px;
+}
+
+.tool-group { display: flex; flex-direction: column; gap: 8px; }
+
+.tool-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.tool-group .stack { margin-top: 0; padding-top: 0; }
+
+/* --- liens sociaux (liste) --- */
+
+ul.socials {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.socials li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  transition: color 0.18s var(--ease), gap 0.2s var(--ease);
+}
+
+.socials li a:hover { color: var(--accent); gap: 13px; }
+
+.socials svg { width: 16px; height: 16px; opacity: 0.8; flex: 0 0 auto; }
+
+.socials-compact { flex-direction: row !important; flex-wrap: wrap; gap: 16px !important; }
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* --- ajustements mobiles --- */
+
+@media (max-width: 700px) {
+  .page-hero { padding-block: 44px 32px; }
+  .project-body { padding-block: 36px 56px; }
+  .section-foot { gap: 14px; }
+  .block p { font-size: 0.98rem; }
+}
+
+/* ---------- carte projet mise en avant ---------- */
+
+.card.project.feature {
+  padding: clamp(26px, 3.4vw, 40px);
+  gap: 18px;
+  border-color: var(--line-strong);
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(122, 168, 255, 0.1), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.012));
+}
+
+.feature-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.feature-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.card.project.feature .project-name {
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+}
+
+.card.project.feature p {
+  font-size: 1rem;
+  max-width: 62ch;
+}
+
+.feature-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+/* ---------- finitions mobiles ---------- */
+
+@media (max-width: 700px) {
+  .hero-panel { font-size: 0.8rem; padding: 16px 18px 4px; }
+  .hero-panel dt { font-size: 0.72rem; }
+  .hero-panel dd { font-size: 0.78rem; }
+  .field label { font-size: 0.76rem; }
+  .consent { font-size: 0.85rem; }
+  .hero-cta .btn { flex: 1 1 auto; justify-content: center; }
+}
+
+/* cibles tactiles confortables */
+.field input,
+.field textarea,
+.field select,
+.btn {
+  min-height: 44px;
+}
+
+.field textarea { min-height: 132px; }
+
+/* noms et URLs longs : jamais de débordement */
+.project-name,
+.project-title,
+.mail,
+.brand span {
+  overflow-wrap: anywhere;
+}
+
+/* menu mobile : cible tactile */
+.menu-btn { width: 44px; height: 44px; }

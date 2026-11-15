@@ -1,0 +1,25 @@
+---
+import { pages } from '../data/pages';
+import { projects } from '../data/projects';
+import PageHero from '../components/PageHero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { SITE } from '../site.config';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const p = pages[lang];
+---
+<PageHero kicker={p.projects.kicker} title={p.projects.title} intro={p.projects.intro} meta={p.projects.count(projects.length)} />
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid grid-2">
+      {projects.map((project, i) => <ProjectCard project={project} lang={lang} index={i} />)}
+    </div>
+    <div class="section-foot">
+      <a class="link-quiet" href={SITE.github} target="_blank" rel="noopener noreferrer">
+        {lang === 'fr' ? 'Tous les dépôts sur GitHub' : 'All repositories on GitHub'} ↗
+      </a>
+    </div>
+  </div>
+</section>

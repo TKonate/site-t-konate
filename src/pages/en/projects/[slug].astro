@@ -1,0 +1,21 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ProjectView from '../../../views/Project.astro';
+import { projects } from '../../../data/projects';
+import { pages } from '../../../data/pages';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+---
+<Base
+  lang="en"
+  title={`${project.name} — ${project.kind.en}`}
+  description={project.summary.en}
+  altFr={`/projets/${project.slug}/`}
+  altEn={`/en/projects/${project.slug}/`}
+>
+  <ProjectView project={project} lang="en" />
+</Base>

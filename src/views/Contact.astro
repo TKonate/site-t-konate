@@ -1,0 +1,36 @@
+---
+import { pages } from '../data/pages';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { SITE } from '../site.config';
+import { copy } from '../data/copy';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const p = pages[lang];
+const t = copy[lang];
+const biz = SITE.commercial;
+---
+<PageHero kicker={p.contact.kicker} title={p.contact.title} intro={p.contact.intro} />
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div data-reveal>
+      <div class="contact-direct">
+        <span class="muted mono-label">{lang === 'fr' ? 'Écrire directement' : 'Email directly'}</span>
+        <a class="mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <span class="muted" style="font-size:.9rem">{SITE.location[lang]}</span>
+      </div>
+      {biz && (
+        <div class="availability">
+          <span class="pill">{t.contact.availability.pill}</span>
+          <p>{t.contact.availability.line}</p>
+        </div>
+      )}
+      <h2 class="block-title">{p.contact.links}</h2>
+      <SocialLinks lang={lang} />
+    </div>
+    <ContactForm lang={lang} />
+  </div>
+</section>

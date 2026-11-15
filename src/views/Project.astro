@@ -1,0 +1,58 @@
+---
+import { pages } from '../data/pages';
+import { projects, type Project } from '../data/projects';
+import { routes } from '../lib/routes';
+
+interface Props { project: Project; lang: 'fr' | 'en' }
+const { project, lang } = Astro.props;
+const p = pages[lang].project;
+const idx = projects.findIndex((x) => x.slug === project.slug);
+const next = projects[(idx + 1) % projects.length];
+---
+<article class="project-page">
+  <header class="page-hero project-hero" data-reveal>
+    <div class="wrap">
+      <a class="back-link" href={routes.projects[lang]}>← {p.back}</a>
+      <p class="kicker">{project.kind[lang]} · {project.year}</p>
+      <h1 class="project-title">{project.name}</h1>
+      <p class="page-lead">{project.pitch[lang]}</p>
+      <ul class="stack stack-lg">
+        {project.stack.map((s) => <li>{s}</li>)}
+      </ul>
+      {project.url && (
+        <p style="margin-top:22px">
+          <a class="btn btn-primary" href={project.url} target="_blank" rel="noopener noreferrer">{p.repo} ↗</a>
+        </p>
+      )}
+    </div>
+  </header>
+
+  <div class="wrap project-body">
+    <section class="block" data-reveal>
+      <h2>{p.problem}</h2>
+      <p>{project.problem[lang]}</p>
+    </section>
+
+    <section class="block" data-reveal>
+      <h2>{p.built}</h2>
+      <p>{project.built[lang]}</p>
+    </section>
+
+    <section class="block" data-reveal>
+      <h2>{p.highlights}</h2>
+      <ul class="points">
+        {project.highlights[lang].map((h) => <li>{h}</li>)}
+      </ul>
+    </section>
+
+    <nav class="next-project" data-reveal>
+      <span class="kicker">{p.next}</span>
+      <a href={routes.project(next.slug)[lang]}>
+        {next.name}
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </nav>
+  </div>
+</article>

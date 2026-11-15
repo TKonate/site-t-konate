@@ -1,30 +1,32 @@
 ---
 import { SITE, BRAND, TAGLINE } from '../site.config';
 import { copy } from '../data/copy';
+import { pages } from '../data/pages';
+import { routes } from '../lib/routes';
 
-interface Props { lang: 'fr' | 'en' }
-const { lang } = Astro.props;
+interface Props { lang: 'fr' | 'en'; altFr: string; altEn: string }
+const { lang, altFr, altEn } = Astro.props;
 const t = copy[lang];
-const prefix = lang === 'fr' ? '/' : '/en/';
-const sections: Array<[string, string]> = [
-  ['#studio', t.nav.studio],
-  ['#projets', t.nav.projects],
-  ['#methode', t.nav.process],
-  ['#a-propos', t.nav.about],
+const p = pages[lang];
+const other: 'fr' | 'en' = lang === 'fr' ? 'en' : 'fr';
+
+const nav: Array<[string, string]> = [
+  [routes.projects[lang], p.projects.title],
+  [routes.about[lang], t.nav.about],
+  [routes.contact[lang], p.contact.title],
 ];
-// En mode portfolio, ni section Studio ni méthode : ce sont des arguments commerciaux.
-const nav = SITE.commercial
-  ? sections
-  : sections.filter(([href]) => href !== '#studio' && href !== '#methode');
+if (SITE.commercial) nav.unshift([`${routes.home[lang]}#studio`, t.nav.studio]);
+
+const altPath = lang === 'fr' ? altEn : altFr;
+const ctaLabel = SITE.commercial
+  ? (lang === 'fr' ? 'Me contacter' : 'Get in touch')
+  : (lang === 'fr' ? 'Écrire' : 'Say hi');
 ---
 <header class="header">
   <div class="wrap header-inner">
-    <a class="brand" href={prefix} aria-label={BRAND}>
+    <a class="brand" href={routes.home[lang]} aria-label={BRAND}>
       <svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M12 1.6 13.9 9.1 21.4 11 13.9 12.9 12 20.4 10.1 12.9 2.6 11 10.1 9.1Z"
-          fill="url(#g)"
-        />
+        <path d="M12 1.6 13.9 9.1 21.4 11 13.9 12.9 12 20.4 10.1 12.9 2.6 11 10.1 9.1Z" fill="url(#g)"/>
         <defs>
           <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#9dbdff"></stop>
@@ -37,27 +39,39 @@ const nav = SITE.commercial
     </a>
 
     <nav class="nav" aria-label="Navigation">
-      {nav.map(([href, label]) => <a href={`${prefix}${href}`}>{label}</a>)}
+      {nav.map(([href, label], i) => (
+        <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>{label}</a>
+      ))}
     </nav>
 
     <div class="header-actions">
-      <div class="lang" role="group" aria-label="Language">
-        <a href="/" aria-current={lang === 'fr' ? 'true' : 'false'}>FR</a>
-        <a href="/en/" aria-current={lang === 'en' ? 'true' : 'false'}>EN</a>
+      <div class="lang" role="group" aria-label={lang === 'fr' ? 'Langue' : 'Language'}>
+        <a
+          href={altFr}
+          data-set-lang="fr"
+          aria-current={lang === 'fr' ? 'true' : 'false'}
+          hreflang="fr"
+          aria-label="Français">FR</a>
+        <a
+          href={altEn}
+          data-set-lang="en"
+          aria-current={lang === 'en' ? 'true' : 'false'}
+          hreflang="en"
+          aria-label="English">EN</a>
       </div>
-      <a class="btn btn-primary btn-sm" href={`${prefix}#contact`}>{lang === 'fr' ? 'Me contacter' : 'Get in touch'}</a>
+      <a class="btn btn-primary btn-sm" href={`${routes.contact[lang]}`}>{ctaLabel}</a>
 
-    <details class="nav-mobile">
-      <summary class="menu-btn" aria-label={lang === 'fr' ? 'Ouvrir le menu' : 'Open menu'}>
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </summary>
-      <nav class="mobile-panel" aria-label="Navigation">
-        {nav.map(([href, label]) => <a href={`${prefix}${href}`}>{label}</a>)}
-        <a href={`${prefix}#contact`}>{lang === 'fr' ? 'Contact' : 'Contact'}</a>
-      </nav>
-    </details>
+      <details class="nav-mobile">
+        <summary class="menu-btn" aria-label={lang === 'fr' ? 'Ouvrir le menu' : 'Open menu'}>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </summary>
+        <nav class="mobile-panel" aria-label="Navigation">
+          {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+          <a href={routes.contact[lang]}>{p.contact.title}</a>
+        </nav>
+      </details>
     </div>
   </div>
 </header>

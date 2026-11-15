@@ -8,9 +8,15 @@ interface Props {
   lang: 'fr' | 'en';
   title: string;
   description: string;
+  /** Chemin de la même page dans l'autre langue. */
+  altFr: string;
+  altEn: string;
 }
-const { lang, title, description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const { lang, title, description, altFr, altEn } = Astro.props;
+const base = SITE.url.replace(/\/$/, '');
+const canonical = base + Astro.url.pathname;
+const frUrl = base + altFr;
+const enUrl = base + altEn;
 ---
 <!doctype html>
 <html lang={lang}>
@@ -20,18 +26,19 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="fr" href={new URL('/', SITE.url).href} />
-    <link rel="alternate" hreflang="en" href={new URL('/en/', SITE.url).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL('/', SITE.url).href} />
+    <link rel="alternate" hreflang="fr" href={frUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={frUrl} />
     <meta name="theme-color" content="#08090c" />
     <meta name="robots" content="index, follow" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE.brand} />
+    <meta property="og:site_name" content={SITE.owner} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_GB' : 'fr_FR'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -41,30 +48,91 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href;
 
     <script type="application/ld+json" set:html={JSON.stringify({
       '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: SITE.brand,
-      url: SITE.url,
+      '@type': 'Person',
+      name: SITE.owner,
+      url: base,
       email: SITE.email,
-      founder: { '@type': 'Person', name: SITE.owner },
-      areaServed: 'FR',
-      description,
+      jobTitle: lang === 'fr'
+        ? 'Étudiant en informatique et électronique'
+        : 'Computer science and electronics student',
       sameAs: [SITE.github, SITE.linkedin],
+      knowsAbout: ['Python', 'TypeScript', 'Docker', 'Ollama', 'Linux', 'Cybersecurity'],
     })} />
+
+    <script is:inline>
+      // Choix de langue : préférence explicite d'abord, langue du navigateur sinon.
+      (function () {
+        document.documentElement.classList.add('js');
+        var lang = document.documentElement.lang;
+        var stored = null;
+        try { stored = localStorage.getItem('lang'); } catch (e) {}
+        var frEl = document.querySelector('link[rel="alternate"][hreflang="fr"]');
+        var enEl = document.querySelector('link[rel="alternate"][hreflang="en"]');
+        var target = null;
+        if (stored === 'en' && lang === 'fr' && enEl) target = enEl.href;
+        else if (stored === 'fr' && lang === 'en' && frEl) target = frEl.href;
+        else if (!stored && lang === 'fr' && enEl) {
+          var list = navigator.languages && navigator.languages.length
+            ? navigator.languages : [navigator.language || 'fr'];
+          var primary = String(list[0] || 'fr').toLowerCase();
+          if (primary.indexOf('fr') !== 0) target = enEl.href;
+        }
+        if (target) location.replace(new URL(target).pathname + new URL(target).search);
+      })();
+    </script>
   </head>
   <body>
-    <Header lang={lang} />
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <Header lang={lang} altFr={altFr} altEn={altEn} />
     <main class="shell">
       <slot />
     </main>
     <Footer lang={lang} />
 
     <script is:inline>
-      const header = document.querySelector('.header');
-      const onScroll = () => {
-        header?.setAttribute('data-scrolled', String(window.scrollY > 8));
-      };
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
+      // Barre de progression + en-tête compacté
+      (function () {
+        var header = document.querySelector('.header');
+        var bar = document.querySelector('.scroll-progress');
+        function onScroll() {
+          var y = window.scrollY;
+          header && header.setAttribute('data-scrolled', String(y > 8));
+          if (bar) {
+            var h = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+          }
+        }
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+
+      // Apparition au scroll
+      (function () {
+        var items = document.querySelectorAll('[data-reveal]');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) {
+          items.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        items.forEach(function (el) { io.observe(el); });
+      })();
+
+      // Mémoriser le choix de langue au clic
+      (function () {
+        document.querySelectorAll('[data-set-lang]').forEach(function (a) {
+          a.addEventListener('click', function () {
+            try { localStorage.setItem('lang', a.getAttribute('data-set-lang')); } catch (e) {}
+          });
+        });
+      })();
     </script>
   </body>
 </html>

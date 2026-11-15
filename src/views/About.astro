@@ -1,0 +1,62 @@
+---
+import { SITE } from '../site.config';
+import { copy } from '../data/copy';
+import { pages, toolbox } from '../data/pages';
+import { projects } from '../data/projects';
+import PageHero from '../components/PageHero.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const t = copy[lang];
+const p = pages[lang];
+const box = toolbox[lang];
+const groups: Array<[string, readonly string[]]> = [
+  [p.about.toolbox.langages, box.langages],
+  [p.about.toolbox.infra, box.infra],
+  [p.about.toolbox.data, box.data],
+  [p.about.toolbox.practice, box.practice],
+];
+---
+<PageHero kicker={p.about.kicker} title={p.about.title} intro={t.about.body[0]} />
+
+<section class="section">
+  <div class="wrap about-grid">
+    <div class="prose" data-reveal>
+      {t.about.body.slice(1).map((para) => <p>{para}</p>)}
+      <h2 class="block-title">{p.about.sections.approach}</h2>
+      <p>
+        {lang === 'fr'
+          ? "Je préfère un système simple qui tourne et que je peux réparer à un système élégant que personne ne comprend. Concrètement : des livrables testés, des logs lisibles, une documentation qui permet de reprendre le travail sans moi."
+          : 'I prefer a simple system that runs and that I can repair over an elegant one nobody understands. In practice: tested deliverables, readable logs, and documentation that lets someone else pick the work up without me.'}
+      </p>
+      <p>
+        {lang === 'fr'
+          ? `${projects.length} projets publics, du banc de mesure de LLM locaux au système multi-agents auto-hébergé. Le code est sur GitHub : les dépôts sont vérifiables, y compris leurs tests et leur intégration continue.`
+          : `${projects.length} public projects, from local LLM benchmarking to a self-hosted multi-agent system. The code is on GitHub: the repositories are verifiable, including their tests and continuous integration.`}
+      </p>
+    </div>
+
+    <div data-reveal>
+      <dl class="facts">
+        {t.about.facts.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
+      </dl>
+      <h2 class="block-title">{p.about.sections.toolbox}</h2>
+      <div class="toolbox">
+        {groups.map(([label, items]) => (
+          <div class="tool-group">
+            <span class="tool-label">{label}</span>
+            <ul class="stack">
+              {items.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <h2 class="block-title">{p.about.sections.elsewhere}</h2>
+      <p class="muted" style="font-size:.92rem;margin-bottom:14px">{p.about.linksIntro}</p>
+      <SocialLinks lang={lang} />
+    </div>
+  </div>
+</section>

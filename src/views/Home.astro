@@ -1,0 +1,161 @@
+---
+import { SITE } from '../site.config';
+import { copy } from '../data/copy';
+import { personal } from '../data/personal';
+import { pages } from '../data/pages';
+import { projects } from '../data/projects';
+import { routes } from '../lib/routes';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const t = copy[lang];
+const p = pages[lang];
+const biz = SITE.commercial;
+const hero = biz ? t.hero : personal[lang].hero;
+const contactCopy = biz ? t.contact : { title: personal[lang].contact.title, intro: personal[lang].contact.intro };
+
+const featured = projects.filter((x) => x.featured).slice(0, 3);
+const rest = projects.length - featured.length;
+---
+<section class="hero">
+  <div class="aurora" aria-hidden="true">
+    <span class="aurora-blob a1"></span>
+    <span class="aurora-blob a2"></span>
+    <span class="aurora-blob a3"></span>
+  </div>
+  <div class="wrap hero-grid">
+    <div class="hero-inner">
+      <p class="kicker">{hero.kicker}</p>
+      <h1>{hero.title}</h1>
+      <p class="lead">{hero.lead}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href={routes.projects[lang]}>{hero.ctaPrimary}</a>
+        <a class="btn" href={routes.contact[lang]}>{hero.ctaSecondary}</a>
+      </div>
+      <ul class="badges">
+        {hero.badges.map((b) => <li>{b}</li>)}
+      </ul>
+    </div>
+
+    <aside class="hero-panel" aria-label={t.heroPanel.title} data-reveal>
+      <p class="hero-panel-title"><span class="dot"></span>{t.heroPanel.title}</p>
+      <dl>
+        {t.heroPanel.rows.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
+      </dl>
+    </aside>
+  </div>
+</section>
+
+{biz && (
+  <section class="section" id="studio">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="kicker">{t.nav.studio}</p>
+        <h2>{t.services.title}</h2>
+        <p>{t.services.intro}</p>
+      </div>
+      <div class="grid grid-3 services-grid">
+        {t.services.items.map((item, i) => (
+          <article class="card" data-reveal>
+            <span class="card-index">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <p class="card-tag">{item.tag}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="section" id="projets">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="kicker">{p.projects.kicker}</p>
+      <h2>{lang === 'fr' ? 'Projets sélectionnés' : 'Selected work'}</h2>
+      <p>{t.projects.intro}</p>
+    </div>
+    <ProjectCard project={featured[0]} lang={lang} variant="feature" />
+    <div class="grid grid-2" style="margin-top:16px">
+      {featured.slice(1).map((project, i) => <ProjectCard project={project} lang={lang} index={i + 1} />)}
+    </div>
+    <div class="section-foot">
+      <a class="btn" href={routes.projects[lang]}>
+        {lang === 'fr' ? `Voir les ${projects.length} projets` : `See all ${projects.length} projects`}
+      </a>
+      <a class="link-quiet" href={SITE.github} target="_blank" rel="noopener noreferrer">
+        {lang === 'fr' ? 'Tout le code sur GitHub' : 'All the code on GitHub'} ↗
+      </a>
+    </div>
+  </div>
+</section>
+
+{biz && (
+  <section class="section" id="methode">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="kicker">{t.nav.process}</p>
+        <h2>{t.process.title}</h2>
+        <p>{t.process.intro}</p>
+      </div>
+      <div class="steps">
+        {t.process.steps.map((s) => (
+          <article class="step" data-reveal>
+            <span class="step-n">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<section class="section" id="a-propos">
+  <div class="wrap about-grid">
+    <div data-reveal>
+      <div class="section-head" style="margin-bottom:22px">
+        <p class="kicker">{t.nav.about}</p>
+        <h2>{t.about.title}</h2>
+      </div>
+      <div class="prose">
+        {t.about.body.slice(1).map((para) => <p>{para}</p>)}
+      </div>
+      <p style="margin-top:24px">
+        <a class="link-quiet" href={routes.about[lang]}>
+          {lang === 'fr' ? 'En savoir plus' : 'More about me'} →
+        </a>
+      </p>
+    </div>
+    <dl class="facts" data-reveal>
+      {t.about.facts.map(([k, v]) => (
+        <div><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap contact-grid">
+    <div data-reveal>
+      <div class="section-head" style="margin-bottom:22px">
+        <p class="kicker">{p.contact.kicker}</p>
+        <h2>{contactCopy.title}</h2>
+        <p>{contactCopy.intro}</p>
+      </div>
+      <SocialLinks lang={lang} />
+      {biz && (
+        <div class="availability">
+          <span class="pill">{t.contact.availability.pill}</span>
+          <p>{t.contact.availability.line}</p>
+        </div>
+      )}
+    </div>
+    <ContactForm lang={lang} />
+  </div>
+</section>

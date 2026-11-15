@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import Projects from '../../views/Projects.astro';
+import { pages } from '../../data/pages';
+
+const p = pages.fr;
+---
+<Base lang="fr" title={`${p.projects.title} — Tibério Konate`} description={p.projects.intro} altFr="/projets/" altEn="/en/projects/">
+  <Projects lang="fr" />
+</Base>

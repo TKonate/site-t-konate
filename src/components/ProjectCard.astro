@@ -1,0 +1,33 @@
+---
+import type { Project } from '../data/projects';
+import { routes } from '../lib/routes';
+import { pages } from '../data/pages';
+
+interface Props { project: Project; lang: 'fr' | 'en'; index?: number; variant?: 'default' | 'feature' }
+const { project, lang, index, variant = 'default' } = Astro.props;
+const isFeature = variant === 'feature';
+const p = pages[lang].project;
+const href = routes.project(project.slug)[lang];
+---
+<article class="card project" class:list={[{ feature: isFeature }]} data-reveal>
+  <a class="project-link-cover" href={href} aria-label={project.name}></a>
+  <div class="project-top">
+    <span class="project-name">{project.name}</span>
+    <span class="project-year">{project.year}</span>
+  </div>
+  {isFeature && <span class="feature-label">{lang === 'fr' ? 'Projet phare' : 'Flagship project'}</span>}
+  <div class="project-badges">
+    <span class="project-kind">{project.kind[lang]}</span>
+    {project.status === 'wip' && <span class="badge-wip">{p.statusWip}</span>}
+  </div>
+  <p>{project.summary[lang]}</p>
+  <ul class="stack">
+    {project.stack.map((s) => <li>{s}</li>)}
+  </ul>
+  <span class="project-cta">
+    {lang === 'fr' ? 'Lire l’étude de cas' : 'Read the case study'}
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</article>
