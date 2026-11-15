@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import HomePage from '../../components/HomePage.astro';
+import { copy } from '../../data/copy';
+
+const t = copy.en;
+---
+<Base lang="en" title={t.meta.title} description={t.meta.description}>
+  <HomePage lang="en" />
+</Base>

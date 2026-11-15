@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config';
+
+const incomplete = !SITE.legal.siret || !SITE.legal.address;
+---
+<Base
+  lang="fr"
+  title={`Mentions légales — ${SITE.brand}`}
+  description="Mentions légales, hébergement et traitement des données personnelles du site t-konate.dev."
+>
+  <article class="wrap legal">
+    <h1>Mentions légales</h1>
+
+    {
+      incomplete && (
+        <p class="note">
+          <strong>À compléter avant publication publique :</strong> numéro SIRET et adresse de
+          l'éditeur. Ces mentions sont obligatoires (LCEN art. 6, III). Ce bloc disparaît
+          automatiquement une fois <code>SITE.legal</code> renseigné dans{' '}
+          <code>src/site.config.ts</code>.
+        </p>
+      )
+    }
+
+    <h2>Éditeur du site</h2>
+    <ul>
+      <li>{SITE.owner}</li>
+      <li>{SITE.legal.status.fr}</li>
+      {SITE.legal.siret && <li>SIRET : {SITE.legal.siret}</li>}
+      {SITE.legal.address && <li>Adresse : {SITE.legal.address}</li>}
+      <li>Contact : <a href={`mailto:${SITE.email}`} style="color:var(--accent)">{SITE.email}</a></li>
+    </ul>
+
+    <h2>Hébergement</h2>
+    <p>
+      Le site est hébergé par Cloudflare, Inc. (Cloudflare Pages), 101 Townsend Street, San
+      Francisco, CA 94107, États-Unis — <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">cloudflare.com</a>.
+    </p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+      L'ensemble des contenus de ce site (textes, code, éléments graphiques) est la propriété de
+      {SITE.owner}, sauf mention contraire. Les extraits de code publiés sur les dépôts GitHub
+      liés sont régis par la licence indiquée dans chaque dépôt.
+    </p>
+
+    <h2>Données personnelles</h2>
+    <p>
+      Le formulaire de contact collecte uniquement les informations que vous y saisissez : nom,
+      adresse email, structure (facultative) et message.
+    </p>
+    <ul>
+      <li><strong>Finalité :</strong> répondre à votre demande.</li>
+      <li>
+        <strong>Base légale :</strong> votre démarche volontaire de prise de contact (intérêt
+        légitime à traiter une demande commerciale).
+      </li>
+      <li>
+        <strong>Destinataires :</strong> {SITE.owner} et le prestataire technique d'acheminement
+        des emails. Aucune cession, revente ou location à des tiers.
+      </li>
+      <li><strong>Durée de conservation :</strong> 12 mois à compter du dernier échange, puis suppression.</li>
+      <li>
+        <strong>Vos droits :</strong> accès, rectification, effacement, opposition et portabilité.
+        Écrivez à <a href={`mailto:${SITE.email}`} style="color:var(--accent)">{SITE.email}</a>.
+      </li>
+    </ul>
+
+    <h2>Cookies et mesure d'audience</h2>
+    <p>
+      Ce site ne dépose aucun cookie publicitaire ni traceur tiers. Il n'utilise aucun outil de
+      mesure d'audience. Les polices de caractères sont celles du système : aucun appel à un CDN
+      externe.
+    </p>
+
+    <h2>Responsabilité</h2>
+    <p>
+      Les informations publiées sont fournies à titre indicatif. Les liens vers des sites tiers
+      n'engagent pas la responsabilité de l'éditeur quant à leur contenu.
+    </p>
+
+    <p style="margin-top:40px"><a href="/" style="color:var(--accent)">← Retour au site</a></p>
+  </article>
+</Base>

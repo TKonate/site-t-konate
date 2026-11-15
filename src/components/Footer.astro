@@ -1,0 +1,22 @@
+---
+import { SITE } from '../site.config';
+import { copy } from '../data/copy';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const t = copy[lang];
+const year = new Date().getFullYear();
+const legalHref = lang === 'fr' ? '/mentions-legales/' : '/mentions-legales/';
+---
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <strong>{SITE.brand}</strong> · {SITE.legal.status[lang]}
+    </div>
+    <div class="footer-legal">
+      <span>© {year} {SITE.owner} — {t.footer.rights}</span>
+      <a href={legalHref}>{t.footer.legal}</a>
+      <a href={SITE.github} rel="noopener noreferrer" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>

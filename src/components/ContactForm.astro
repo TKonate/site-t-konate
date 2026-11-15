@@ -1,0 +1,125 @@
+---
+import { SITE } from '../site.config';
+import { copy } from '../data/copy';
+
+interface Props { lang: 'fr' | 'en' }
+const { lang } = Astro.props;
+const f = copy[lang].contact.form;
+---
+<form class="form" id="contact-form" novalidate data-lang={lang} data-email={SITE.email}>
+  <div class="row row-2">
+    <div class="field">
+      <label for="c-name">{f.name} *</label>
+      <input id="c-name" name="name" type="text" required maxlength="120" autocomplete="name" />
+    </div>
+    <div class="field">
+      <label for="c-email">{f.email} *</label>
+      <input id="c-email" name="email" type="email" required maxlength="160" autocomplete="email" />
+    </div>
+  </div>
+
+  <div class="row row-2">
+    <div class="field">
+      <label for="c-company">{f.company}</label>
+      <input id="c-company" name="company" type="text" maxlength="120" autocomplete="organization" />
+    </div>
+    <div class="field">
+      <label for="c-subject">{f.subject}</label>
+      <select id="c-subject" name="subject">
+        {f.options.map((o) => <option value={o}>{o}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="c-message">{f.message} *</label>
+    <textarea id="c-message" name="message" required maxlength="4000" placeholder={f.messagePlaceholder}></textarea>
+  </div>
+
+  <div class="hp" aria-hidden="true">
+    <label for="c-website">Website</label>
+    <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <input type="hidden" name="lang" value={lang} />
+
+  <p class="consent">
+    {f.consent}{' '}
+    <a href="/mentions-legales/" style="color:var(--accent)">{lang === 'fr' ? 'En savoir plus' : 'Learn more'}</a>
+  </p>
+
+  <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+
+  <button class="btn btn-primary" type="submit" id="form-submit">
+    <span data-label>{f.submit}</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</form>
+
+<script is:inline define:vars={{ t: f }}>
+  (() => {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    const status = document.getElementById('form-status');
+    const submit = document.getElementById('form-submit');
+    const label = submit.querySelector('[data-label]');
+    const email = form.dataset.email;
+
+    const mailtoFallback = (subject, body) => {
+      const href = 'mailto:' + email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      return '<a href="' + href + '" style="color:inherit;text-decoration:underline">' + email + '</a>';
+    };
+
+    const show = (state, html) => {
+      status.dataset.state = state;
+      status.innerHTML = html;
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      if (data.website) return; // honeypot
+      if (!data.name || !data.email || !data.message) {
+        show('error', t.errorGeneric + ' ' + mailtoFallback('Demande via le site', ''));
+        return;
+      }
+
+      submit.disabled = true;
+      label.textContent = t.sending;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          form.reset();
+          show('success', t.success);
+          return;
+        }
+
+        if (res.status === 503) {
+          show('error', t.errorMailto + ' ' + mailtoFallback(
+            'Demande via le site — ' + (data.subject || ''),
+            (data.message || '') + '\n\n— ' + data.name + (data.company ? ' (' + data.company + ')' : '')
+          ));
+          return;
+        }
+
+        let detail = '';
+        try { detail = (await res.json()).error || ''; } catch (_) {}
+        show('error', t.errorGeneric + ' ' + mailtoFallback('Demande via le site', '') + (detail ? ' (' + detail + ')' : ''));
+      } catch (err) {
+        show('error', t.errorGeneric + ' ' + mailtoFallback('Demande via le site', ''));
+      } finally {
+        submit.disabled = false;
+        label.textContent = t.submit;
+      }
+    });
+  })();
+</script>
