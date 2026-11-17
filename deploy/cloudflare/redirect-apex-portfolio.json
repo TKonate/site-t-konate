@@ -13,7 +13,7 @@
           "preserve_query_string": true
         }
       },
-      "expression": "(http.host eq \"t-konate.dev\" and not starts_with(http.request.uri.path, \"/vault\") and not starts_with(http.request.uri.path, \"/beszel\") and not starts_with(http.request.uri.path, \"/hermes\") and not starts_with(http.request.uri.path, \"/n8n\") and not starts_with(http.request.uri.path, \"/webhook\") and not starts_with(http.request.uri.path, \"/rest\") and not starts_with(http.request.uri.path, \"/api\") and not starts_with(http.request.uri.path, \"/.well-known\"))",
+      "expression": "(http.host eq \"t-konate.dev\" and not starts_with(http.request.uri.path, \"/vault\") and not starts_with(http.request.uri.path, \"/beszel\") and not starts_with(http.request.uri.path, \"/hermes\") and not starts_with(http.request.uri.path, \"/n8n\") and not starts_with(http.request.uri.path, \"/webhook\") and not starts_with(http.request.uri.path, \"/rest\") and not starts_with(http.request.uri.path, \"/api\") and not starts_with(http.request.uri.path, \"/.well-known\") and not starts_with(http.request.uri.path, \"/presentation\"))",
       "description": "Règle A — portfolio : apex vers www (301, cible vérifiée servie par Pages)",
       "enabled": true
     }

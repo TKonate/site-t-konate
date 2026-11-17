@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { routes } from '../lib/routes';
+---
+<Base
+  lang="fr"
+  title="Page introuvable · Tibério Konate"
+  description="Cette page n'existe pas ou a été déplacée."
+  altFr="/404"
+  altEn="/404"
+>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="kicker">Erreur 404</p>
+      <h1>Cette page n'existe pas</h1>
+      <p class="page-lead">
+        L'adresse demandée ne correspond à aucun contenu du site. Elle a peut-être été
+        déplacée, ou il y a une faute de frappe dans le lien.
+      </p>
+      <p class="page-lead" lang="en">
+        This page does not exist. The address you asked for matches nothing on this site.
+      </p>
+      <div class="hero-cta" style="margin-top:22px">
+        <a class="btn btn-primary" href={routes.home.fr}>Accueil</a>
+        <a class="btn" href={routes.projects.fr}>Projets</a>
+        <a class="btn" href={routes.contact.fr}>Me contacter</a>
+      </div>
+    </div>
+  </section>
+</Base>
