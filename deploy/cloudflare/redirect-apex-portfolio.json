@@ -6,7 +6,7 @@
       "action": "redirect",
       "action_parameters": {
         "from_value": {
-          "status_code": 302,
+          "status_code": 301,
           "target_url": {
             "expression": "concat(\"https://www.t-konate.dev\", http.request.uri.path)"
           },
@@ -14,7 +14,7 @@
         }
       },
       "expression": "(http.host eq \"t-konate.dev\" and not starts_with(http.request.uri.path, \"/vault\") and not starts_with(http.request.uri.path, \"/beszel\") and not starts_with(http.request.uri.path, \"/hermes\") and not starts_with(http.request.uri.path, \"/n8n\") and not starts_with(http.request.uri.path, \"/webhook\") and not starts_with(http.request.uri.path, \"/rest\") and not starts_with(http.request.uri.path, \"/api\") and not starts_with(http.request.uri.path, \"/.well-known\"))",
-      "description": "Règle A — portfolio : apex vers www (302 tant que non vérifié, puis 301)",
+      "description": "Règle A — portfolio : apex vers www (301, cible vérifiée servie par Pages)",
       "enabled": true
     }
   ]
