@@ -105,8 +105,8 @@ const f = copy[lang].contact.form;
 
         if (res.status === 503) {
           show('error', t.errorMailto + ' ' + mailtoFallback(
-            'Demande via le site — ' + (data.subject || ''),
-            (data.message || '') + '\n\n— ' + data.name + (data.company ? ' (' + data.company + ')' : '')
+            'Demande via le site : ' + (data.subject || ''),
+            (data.message || '') + '\n\n' + data.name + (data.company ? ' (' + data.company + ')' : '')
           ));
           return;
         }

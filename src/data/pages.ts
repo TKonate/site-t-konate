@@ -5,7 +5,7 @@ export const pages = {
       kicker: 'Travaux',
       title: 'Projets',
       intro:
-        "Six projets, chacun avec sa page : le problème de départ, ce que j'ai réellement construit, et les points techniques qui ont demandé un arbitrage. Le code est public — vous pouvez vérifier plutôt que me croire.",
+        "Six projets, chacun avec sa page : le problème de départ, ce que j'ai réellement construit, et les points techniques qui ont demandé un arbitrage. Le code est public, vous pouvez vérifier plutôt que me croire.",
       count: (n: number) => `${n} projets`,
     },
     project: {
@@ -52,7 +52,7 @@ export const pages = {
       kicker: 'Work',
       title: 'Projects',
       intro:
-        'Six projects, each with its own page: the original problem, what I actually built, and the technical points that required a decision. The code is public — check it rather than take my word.',
+        'Six projects, each with its own page: the original problem, what I actually built, and the technical points that required a decision. The code is public, so check it rather than take my word.',
       count: (n: number) => `${n} projects`,
     },
     project: {

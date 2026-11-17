@@ -1,10 +1,10 @@
 ---
-interface Props { kicker: string; title: string; intro?: string; meta?: string }
+interface Props { kicker?: string; title: string; intro?: string; meta?: string }
 const { kicker, title, intro, meta } = Astro.props;
 ---
 <section class="page-hero" data-reveal>
   <div class="wrap">
-    <p class="kicker">{kicker}</p>
+    {kicker && <p class="kicker">{kicker}</p>}
     <h1>{title}</h1>
     {intro && <p class="page-lead">{intro}</p>}
     {meta && <p class="page-meta">{meta}</p>}

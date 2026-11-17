@@ -11,6 +11,6 @@ export const routes = {
 } as const;
 
 export const sectionLabels = {
-  fr: { projects: 'Projets', about: 'À propos', contact: 'Contact', home: 'Accueil' },
-  en: { projects: 'Projects', about: 'About', contact: 'Contact', home: 'Home' },
+  fr: { projects: 'Projets', about: 'Profil', contact: 'Contact', home: 'Accueil' },
+  en: { projects: 'Projects', about: 'Profile', contact: 'Contact', home: 'Home' },
 } as const;

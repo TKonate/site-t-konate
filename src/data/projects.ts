@@ -35,8 +35,8 @@ export const projects: Project[] = [
       en: 'A reproducible test bench for choosing a local model on measured criteria instead of gut feeling.',
     },
     problem: {
-      fr: "On lit partout qu'un modèle est « rapide ». Sur un VPS sans GPU, la latence dépend du modèle, de la quantification et de la longueur de sortie. Sans protocole reproduisible, le choix se fait sur une impression — et le premier run est toujours trompeur, parce que le modèle n'est pas encore chargé.",
-      en: 'Everyone claims their model is "fast". On a GPU-less VPS, latency depends on the model, the quantization and the output length. Without a reproducible protocol the choice is made on a feeling — and the first run always lies, because the model is not loaded yet.',
+      fr: "On lit partout qu'un modèle est « rapide ». Sur un VPS sans GPU, la latence dépend du modèle, de la quantification et de la longueur de sortie. Sans protocole reproduisible, le choix se fait sur une impression. Et le premier run est toujours trompeur, parce que le modèle n'est pas encore chargé.",
+      en: 'Everyone claims their model is "fast". On a GPU-less VPS, latency depends on the model, the quantization and the output length. Without a reproducible protocol the choice is made on a feeling. And the first run always lies, because the model is not loaded yet.',
     },
     built: {
       fr: "Une CLI Typer avec modèles Pydantic, une suite de neuf prompts en trois catégories (raisonnement court, extraction structurée, texte long), la mesure de latence cold et warm via `--runs`, deux backends interchangeables (llama.cpp et vLLM via une interface compatible OpenAI) et un export CSV. Livré avec image Docker, CI GitHub Actions, 43 tests, mypy strict et ruff propre.",
@@ -45,12 +45,12 @@ export const projects: Project[] = [
     highlights: {
       fr: [
         'Les backends sont interchangeables derrière une interface unique : changer de moteur coûte une sous-classe.',
-        'La distinction cold/warm est mesurée, pas supposée — c’est elle qui invalide la plupart des benchmarks publiés.',
+        'La distinction cold/warm est mesurée, pas supposée. C’est elle qui invalide la plupart des benchmarks publiés.',
         'Résultat concret : Qwen3 1.7B offre le meilleur compromis qualité/latence sur ce matériel.',
       ],
       en: [
         'Backends are swappable behind one interface: changing engine costs a subclass.',
-        'The cold/warm distinction is measured, not assumed — it is what invalidates most published benchmarks.',
+        'The cold/warm distinction is measured, not assumed. It invalidates most published benchmarks.',
         'Concrete outcome: Qwen3 1.7B gives the best quality/latency trade-off on this hardware.',
       ],
     },
@@ -69,8 +69,8 @@ export const projects: Project[] = [
       en: 'Running a multi-agent system at home, without the cloud, and keeping control of the data.',
     },
     pitch: {
-      fr: 'Comment j’organise un système d’agents qui tient sur un seul serveur — et ce que je refuse de lui confier.',
-      en: 'How I organise an agent system on a single server — and what I refuse to give it.',
+      fr: 'Comment j’organise un système d’agents qui tient sur un seul serveur, et ce que je refuse de lui confier.',
+      en: 'How I organise an agent system on a single server, and what I refuse to give it.',
     },
     problem: {
       fr: 'Un système multi-agents qui passe par une API tierce envoie tout son contexte chez ce tiers. Pour des données personnelles, ce n’est pas un détail d’implémentation : c’est une décision d’architecture, et elle se prend avant d’écrire la première ligne.',
@@ -83,12 +83,12 @@ export const projects: Project[] = [
     highlights: {
       fr: [
         'Séparation nette entre l’orchestrateur et les workers : une tâche simple ne réveille pas cinq agents.',
-        'Le routage arbitre entre coût, latence et confidentialité — pas seulement la qualité.',
+        'Le routage arbitre entre coût, latence et confidentialité, pas seulement la qualité.',
         'Toute publication passe par une sanitisation systématique : aucun nom d’hôte, port ou secret.',
       ],
       en: [
         'Clean separation between orchestrator and workers: a simple task does not wake five agents.',
-        'Routing arbitrates between cost, latency and confidentiality — not quality alone.',
+        'Routing arbitrates between cost, latency and confidentiality, not quality alone.',
         'Every publication goes through systematic sanitisation: no hostname, port or secret.',
       ],
     },
@@ -138,8 +138,8 @@ export const projects: Project[] = [
     year: '2026',
     kind: { fr: 'CLI Python', en: 'Python CLI' },
     summary: {
-      fr: 'La documentation de portfolio se fait toujours à la fin — donc jamais. Automatisons-la.',
-      en: 'Portfolio documentation always happens at the end — so never. Let us automate it.',
+      fr: 'La documentation de portfolio se fait toujours à la fin, donc jamais. Automatisons-la.',
+      en: 'Portfolio documentation always happens at the end, so never. Let us automate it.',
     },
     pitch: {
       fr: 'Générer des entrées de portfolio en Markdown à partir de métadonnées de projet.',
@@ -177,16 +177,16 @@ export const projects: Project[] = [
       en: 'Unstructured research produces unverifiable conclusions. The method matters more than the tool.',
     },
     pitch: {
-      fr: 'Collecter, vérifier, synthétiser — documenté sur un cas réel, limites comprises.',
-      en: 'Collect, verify, synthesise — documented on a real case, limits included.',
+      fr: 'Collecter, vérifier, synthétiser : documenté sur un cas réel, limites comprises.',
+      en: 'Collect, verify, synthesise: documented on a real case, limits included.',
     },
     problem: {
       fr: 'Un modèle de recherche peut produire une synthèse convaincante à partir de rien. Sans étape de vérification explicite et sans traçabilité des sources, l’output est indistinguable d’une hallucination soignée.',
       en: 'A research model can produce a convincing synthesis out of nothing. Without an explicit verification step and source traceability, the output is indistinguishable from a well-dressed hallucination.',
     },
     built: {
-      fr: 'Un workflow en trois temps — collecter, vérifier, synthétiser — où chaque étape a ses sources et ses limites documentées. Le dépôt contient également des cas d’étude issus de recherches réelles, avec les points où la méthode a échoué.',
-      en: 'A three-step workflow — collect, verify, synthesise — where each step carries its sources and documented limits. The repository also contains case studies from real research, including where the method failed.',
+      fr: 'Un workflow en trois temps (collecter, vérifier, synthétiser) où chaque étape a ses sources et ses limites documentées. Le dépôt contient également des cas d’étude issus de recherches réelles, avec les points où la méthode a échoué.',
+      en: 'A three-step workflow (collect, verify, synthesise) where each step carries its sources and documented limits. The repository also contains case studies from real research, including where the method failed.',
     },
     highlights: {
       fr: [
@@ -226,12 +226,12 @@ export const projects: Project[] = [
     highlights: {
       fr: [
         'Zéro dépendance UI, polices système : aucun appel à un CDN externe.',
-        'Les pages projet sont générées depuis un seul fichier typé — ajouter un projet coûte un objet.',
+        'Les pages projet sont générées depuis un seul fichier typé : ajouter un projet coûte un objet.',
         'Le formulaire retombe proprement sur un lien mailto si l’envoi n’est pas configuré.',
       ],
       en: [
         'Zero UI dependency, system fonts: no call to an external CDN.',
-        'Project pages are generated from a single typed file — adding a project costs one object.',
+        'Project pages are generated from a single typed file: adding a project costs one object.',
         'The form degrades cleanly to a mailto link when sending is not configured.',
       ],
     },

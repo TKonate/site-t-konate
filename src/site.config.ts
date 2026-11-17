@@ -24,7 +24,7 @@ export const SITE = {
   location: { fr: 'Paris · à distance', en: 'Paris · remote' },
 
   legal: {
-    status: { fr: 'Auto-entrepreneur — code APE 6201Z', en: 'Sole trader — APE code 6201Z' },
+    status: { fr: 'Auto-entrepreneur · code APE 6201Z', en: 'Sole trader · APE code 6201Z' },
     // Renseigner avant de passer commercial à true.
     siret: '',
     address: '',

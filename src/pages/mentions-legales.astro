@@ -4,11 +4,11 @@ import { SITE, BRAND } from '../site.config';
 
 const biz = SITE.commercial;
 const incomplete = biz && (!SITE.legal.siret || !SITE.legal.address);
-const statusFr = biz ? SITE.legal.status.fr : 'Particulier — site personnel, sans activité commerciale';
+const statusFr = biz ? SITE.legal.status.fr : 'Particulier · site personnel, sans activité commerciale';
 ---
 <Base
   lang="fr"
-  title={`Mentions légales — ${BRAND}`}
+  title={`Mentions légales · ${BRAND}`}
   description="Mentions légales, hébergement et traitement des données personnelles du site t-konate.dev."
   altFr="/mentions-legales/"
   altEn="/mentions-legales/"
@@ -48,7 +48,7 @@ const statusFr = biz ? SITE.legal.status.fr : 'Particulier — site personnel, s
     <h2>Hébergement</h2>
     <p>
       Le site est hébergé par Cloudflare, Inc. (Cloudflare Pages), 101 Townsend Street, San
-      Francisco, CA 94107, États-Unis — <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">cloudflare.com</a>.
+      Francisco, CA 94107, États-Unis (<a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">cloudflare.com</a>).
     </p>
 
     <h2>Propriété intellectuelle</h2>

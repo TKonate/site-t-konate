@@ -3,11 +3,11 @@ export type Lang = 'fr' | 'en';
 export const copy = {
   fr: {
     meta: {
-      title: 'Polaris — Automatisation Python, connecteurs API et IA auto-hébergée',
+      title: 'Polaris · Automatisation Python, connecteurs API et IA auto-hébergée',
       description:
         "Studio d'automatisation par Tibério Konate : scripts Python, connecteurs API, workflows n8n et systèmes d'IA auto-hébergés. Diagnostic gratuit, livrables testés et documentés.",
     },
-    nav: { studio: 'Studio', projects: 'Projets', process: 'Méthode', about: 'À propos', contact: 'Contact' },
+    nav: { studio: 'Studio', projects: 'Projets', process: 'Méthode', about: 'Profil', contact: 'Contact' },
     heroPanel: {
       title: 'état du dépôt',
       rows: [
@@ -22,7 +22,7 @@ export const copy = {
       kicker: 'Automatisation · Python · IA auto-hébergée',
       title: "J'automatise ce qui vous coûte du temps.",
       lead:
-        "Développeur et étudiant en informatique & électronique. Je conçois des automatisations Python, des connecteurs entre vos outils et des systèmes d'IA qui tournent chez vous — livrés testés, documentés, et reprenables sans moi.",
+        "Développeur et étudiant en informatique & électronique. Je conçois des automatisations Python, des connecteurs entre vos outils et des systèmes d'IA qui tournent chez vous. Tout est livré testé, documenté, et reprenable sans moi.",
       ctaPrimary: "Discuter d'un projet",
       ctaSecondary: 'Voir mes projets',
       badges: ['Diagnostic gratuit de 20 min', 'Réponse sous 24 h', 'Livrables testés'],
@@ -100,7 +100,7 @@ export const copy = {
       title: 'À propos',
       body: [
         "Je m’appelle Tibério Konate. Étudiant en informatique et électronique, je passe l’essentiel de mon temps à construire des systèmes que je fais tourner moi-même : agents IA multi-profils, routage de modèles, outillage de sécurité, benchmarks reproductibles sur du matériel modeste.",
-        "Cette contrainte — faire beaucoup avec peu de ressources — est exactement celle de la plupart des petites structures. C’est pour ça que je préfère les solutions sobres, mesurables et que vous pouvez reprendre sans moi.",
+        "Faire beaucoup avec peu de ressources, c’est le quotidien de la plupart des petites structures. Alors je préfère des solutions sobres, mesurables, que vous pouvez reprendre sans moi.",
       ],
       facts: [
         ['Basé à', 'Paris, disponible à distance'],
@@ -133,7 +133,7 @@ export const copy = {
           'Autre',
         ],
         success: 'Message envoyé. Je vous réponds sous 24 h.',
-        errorMailto: 'L’envoi automatique n’est pas disponible — écrivez-moi directement :',
+        errorMailto: 'L’envoi automatique n’est pas disponible. Écrivez-moi directement :',
         errorGeneric: 'L’envoi a échoué. Réessayez ou écrivez-moi directement :',
       },
       direct: 'Écrire directement',
@@ -150,11 +150,11 @@ export const copy = {
   },
   en: {
     meta: {
-      title: 'Polaris — Python automation, API connectors and self-hosted AI',
+      title: 'Polaris · Python automation, API connectors and self-hosted AI',
       description:
         'Automation studio by Tibério Konate: Python scripts, API connectors, n8n workflows and self-hosted AI systems. Free diagnostic, tested and documented deliverables.',
     },
-    nav: { studio: 'Studio', projects: 'Projects', process: 'Process', about: 'About', contact: 'Contact' },
+    nav: { studio: 'Studio', projects: 'Projects', process: 'Process', about: 'Profile', contact: 'Contact' },
     heroPanel: {
       title: 'repo status',
       rows: [
@@ -169,7 +169,7 @@ export const copy = {
       kicker: 'Automation · Python · Self-hosted AI',
       title: 'I automate the work that eats your time.',
       lead:
-        'Developer and computer science & electronics student. I build Python automations, connectors between your tools, and AI systems that run on your own hardware — delivered tested, documented, and maintainable without me.',
+        'Developer and computer science & electronics student. I build Python automations, connectors between your tools, and AI systems that run on your own hardware. Everything ships tested, documented and maintainable without me.',
       ctaPrimary: 'Discuss a project',
       ctaSecondary: 'See my work',
       badges: ['Free 20-min diagnostic', 'Reply within 24h', 'Tested deliverables'],
@@ -247,7 +247,7 @@ export const copy = {
       title: 'About',
       body: [
         'I am Tibério Konate. A computer science and electronics student, I spend most of my time building systems I run myself: multi-profile AI agents, model routing, security tooling, reproducible benchmarks on modest hardware.',
-        'That constraint — doing a lot with few resources — is exactly the one most small organisations face. Which is why I favour sober, measurable solutions you can take over without me.',
+        'Doing a lot with few resources is what most small organisations deal with every day. So I favour sober, measurable solutions you can take over without me.',
       ],
       facts: [
         ['Based in', 'Paris, available remotely'],
@@ -280,7 +280,7 @@ export const copy = {
           'Something else',
         ],
         success: 'Message sent. I will reply within 24h.',
-        errorMailto: 'Automatic sending is unavailable — email me directly:',
+        errorMailto: 'Automatic sending is unavailable. Email me directly:',
         errorGeneric: 'Sending failed. Try again or email me directly:',
       },
       direct: 'Email directly',
