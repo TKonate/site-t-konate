@@ -1,0 +1,22 @@
+{
+  "_comment": "NON APPLIQUÉ. Règle B (Polaris) — à activer seulement quand le site Polaris existe et est publié sur polaris.t-konate.dev. Remplacer TARGET_HOST par l'adresse réelle de Polaris avant tout envoi à l'API, puis retirer la clé _comment (l'API refuse les champs inconnus).",
+  "name": "polaris.t-konate.dev — redirection vers le site Polaris",
+  "description": "Modèle, non déployé : voir D16 dans le vault.",
+  "rules": [
+    {
+      "action": "redirect",
+      "action_parameters": {
+        "from_value": {
+          "status_code": 302,
+          "target_url": {
+            "expression": "concat(\"https://TARGET_HOST\", http.request.uri.path)"
+          },
+          "preserve_query_string": true
+        }
+      },
+      "expression": "(http.host eq \"polaris.t-konate.dev\")",
+      "description": "Règle B — Polaris (bloquée par SIRET et par l'absence de déploiement)",
+      "enabled": false
+    }
+  ]
+}

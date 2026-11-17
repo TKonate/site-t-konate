@@ -8,14 +8,22 @@ Aucun secret dans le paquet, aucun fichier de développement.
 1. https://dash.cloudflare.com → **Workers & Pages** → **Create** → **Pages** →
    **Upload assets**.
 2. Nom du projet : `t-konate`.
-3. Glisser `site-t-konate-dist.zip` (ou le dossier `dist/` décompressé).
+3. Le dépôt vit **dans le conteneur** : récupérer l'archive sur l'hôte d'abord,
+   puis la glisser dans le navigateur.
+   ```bash
+   docker cp hermes:/opt/data/projects/site-t-konate/site-t-konate-dist.zip ~/
+   ```
+   (régénérée le 2026-11-17 : 21 pages, 520 Ko décompressé, 117 Ko en zip)
 4. **Deploy**. Le site est en ligne sur `t-konate.pages.dev`.
-5. **Custom domains** → ajouter `t-konate.dev` et `www.t-konate.dev` →
-   Cloudflare crée l'enregistrement DNS.
+5. **Custom domains** → ajouter **`www.t-konate.dev` uniquement** → Cloudflare crée
+   l'enregistrement DNS.
 
-⚠️ Avant l'étape 5, vérifier que les sous-domaines du homelab (`vault.`, `n8n.`,
-`beszel.`, `hermes.`) pointent toujours vers le tunnel : le domaine racine change
-de cible, pas eux. Si un sous-domaine casse, c'est un incident DNS à signaler à Admin.
+⛔ **Ne jamais ajouter `t-konate.dev` (l'apex) comme custom domain.** L'apex est
+servi par le tunnel et porte les services en préfixes de chemins : un hébergeur
+statique ne connaît que ses propres pages et renverrait 404 sur `/vault/`,
+`/beszel/`, `/hermes/`, `/n8n/`. Voir la décision D15/D16 du vault. L'apex mène au
+site par une *règle de redirection* scopée, pas par une bascule DNS
+(`deploy/cloudflare/`).
 
 ## Option B — GitHub + déploiement automatique (recommandé ensuite)
 
@@ -52,7 +60,9 @@ le site (le site renvoie déjà vers GitHub sur les 21 pages).
 ## Vérifications après publication
 
 ```bash
-curl -I https://t-konate.dev                      # 200 + HTTPS
-curl -s https://t-konate.dev | grep -c "Tibério"  # contenu servi
-curl -s https://t-konate.dev/sitemap.xml | grep -c "<url>"   # 21
+curl -I https://www.t-konate.dev                       # 200 + HTTPS
+curl -s https://www.t-konate.dev | grep -c "Tibério"   # contenu servi
+curl -s https://www.t-konate.dev/sitemap.xml | grep -c "<url>"   # 21
+curl -sI https://t-konate.dev/ | grep -i location      # 302 -> www (règle A)
+curl -s -o /dev/null -w '%{http_code}\n' https://t-konate.dev/vault/   # 200, non redirigé
 ```
