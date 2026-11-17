@@ -4,7 +4,7 @@
  * Envoie le message du formulaire par email via Resend.
  * Variables d'environnement (Cloudflare Pages > Settings > Environment variables) :
  *   RESEND_API_KEY  clé API Resend (obligatoire)
- *   CONTACT_TO      destinataire (défaut : tiberio.konatepro@gmail.com)
+ *   CONTACT_TO      destinataire (défaut : contact@t-konate.dev)
  *   CONTACT_FROM    expéditeur vérifié (défaut : site@t-konate.dev)
  *
  * Sans RESEND_API_KEY, la fonction répond 503 : le front bascule sur le lien mailto.
@@ -71,7 +71,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   hits.set(`${ip}:${now}`, now);
 
-  const to = env.CONTACT_TO ?? 'tiberio.konatepro@gmail.com';
+  const to = env.CONTACT_TO ?? 'contact@t-konate.dev';
   const from = env.CONTACT_FROM ?? 'site@t-konate.dev';
 
   const html = `

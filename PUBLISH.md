@@ -46,7 +46,7 @@ formulaire de contact :
 | Nom | Valeur |
 |---|---|
 | `RESEND_API_KEY` | clé créée sur resend.com |
-| `CONTACT_TO` | `tiberio.konatepro@gmail.com` |
+| `CONTACT_TO` | `contact@t-konate.dev` |
 | `CONTACT_FROM` | `site@t-konate.dev` (domaine à vérifier chez Resend) |
 
 Sans ces variables, le site fonctionne : le formulaire bascule sur un lien mailto.

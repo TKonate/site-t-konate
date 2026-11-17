@@ -18,7 +18,7 @@ export const SITE = {
   owner: 'Tibério Konate',
   domain: 't-konate.dev',
   url: 'https://t-konate.dev',
-  email: 'tiberio.konatepro@gmail.com',
+  email: 'contact@t-konate.dev',
   github: 'https://github.com/TKonate',
   linkedin: 'https://www.linkedin.com/in/tiberio-konate',
   location: { fr: 'Paris · à distance', en: 'Paris · remote' },
