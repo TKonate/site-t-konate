@@ -1,0 +1,84 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { routes } from '../../../lib/routes';
+
+const articles = (await getCollection('articles', ({ data }) => data.lang === 'en')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const title = 'Writing';
+const description =
+  'Technical write-ups: design decisions, real measurements and stated limits, on systems I run myself.';
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base lang="en" title={`${title} · Tibério Konate`} description={description} altFr="/ecrits/" altEn="/en/writing/">
+  <section class="wrap">
+    <header class="section-head">
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </header>
+
+    <ul class="post-list">
+      {
+        articles.map((entry) => (
+          <li>
+            <a href={routes.article(entry.data.slug).en}>
+              <time datetime={entry.data.date.toISOString()}>{dateFmt.format(entry.data.date)}</time>
+              <h2>{entry.data.title}</h2>
+              <p>{entry.data.lead}</p>
+              <span class="more">Read · {entry.data.readingTime}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 34px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .post-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 24px;
+    border-radius: 14px;
+    border: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+    background: rgba(255, 255, 255, 0.02);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .post-list a:hover {
+    border-color: var(--accent, #7aa8ff);
+    transform: translateY(-1px);
+  }
+  .post-list time {
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute, #8b94a6);
+  }
+  .post-list h2 {
+    margin: 0;
+    font-size: 1.24rem;
+  }
+  .post-list p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .more {
+    font-size: 0.85rem;
+    color: var(--accent, #7aa8ff);
+  }
+</style>

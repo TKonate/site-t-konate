@@ -7,7 +7,7 @@ export const copy = {
       description:
         "Studio d'automatisation par Tibério Konate : scripts Python, connecteurs API, workflows n8n et systèmes d'IA auto-hébergés. Diagnostic gratuit, livrables testés et documentés.",
     },
-    nav: { studio: 'Studio', projects: 'Projets', process: 'Méthode', about: 'Profil', contact: 'Contact' },
+    nav: { studio: 'Studio', projects: 'Projets', process: 'Méthode', writing: 'Écrits', about: 'Profil', contact: 'Contact' },
     heroPanel: {
       title: 'état du dépôt',
       rows: [
@@ -154,7 +154,7 @@ export const copy = {
       description:
         'Automation studio by Tibério Konate: Python scripts, API connectors, n8n workflows and self-hosted AI systems. Free diagnostic, tested and documented deliverables.',
     },
-    nav: { studio: 'Studio', projects: 'Projects', process: 'Process', about: 'Profile', contact: 'Contact' },
+    nav: { studio: 'Studio', projects: 'Projects', process: 'Process', writing: 'Writing', about: 'Profile', contact: 'Contact' },
     heroPanel: {
       title: 'repo status',
       rows: [

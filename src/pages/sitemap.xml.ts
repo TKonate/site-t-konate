@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { projects } from '../data/projects';
 import { SITE } from '../site.config';
 
@@ -6,16 +7,24 @@ const base = SITE.url.replace(/\/$/, '');
 
 type Pair = { fr: string; en: string };
 
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const articles = await getCollection('articles');
   const pairs: Pair[] = [
     { fr: '/', en: '/en/' },
     { fr: '/projets/', en: '/en/projects/' },
+    { fr: '/ecrits/', en: '/en/writing/' },
     { fr: '/a-propos/', en: '/en/about/' },
     { fr: '/contact/', en: '/en/contact/' },
     ...projects.map((p) => ({
       fr: `/projets/${p.slug}/`,
       en: `/en/projects/${p.slug}/`,
     })),
+    ...articles
+      .filter((a) => a.data.lang === 'fr')
+      .map((a) => ({
+        fr: `/ecrits/${a.data.slug}/`,
+        en: `/en/writing/${a.data.translation}/`,
+      })),
     { fr: '/mentions-legales/', en: '/mentions-legales/' },
   ];
 

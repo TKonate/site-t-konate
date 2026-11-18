@@ -1,0 +1,38 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Article from '../../../components/Article.astro';
+import { getCollection, render } from 'astro:content';
+import { routes } from '../../../lib/routes';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('articles', ({ data }) => data.lang === 'en');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, lead, date, translation, readingTime } = entry.data;
+
+const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base
+  lang="en"
+  title={`${title} · Tibério Konate`}
+  description={lead}
+  altFr={routes.article(translation).fr}
+  altEn={routes.article(entry.data.slug).en}
+>
+  <Article
+    title={title}
+    lead={lead}
+    date={date.toISOString()}
+    dateLabel={`${dateFmt.format(date)} · ${readingTime} read`}
+    backHref={routes.writing.en}
+    backLabel="All writing"
+  >
+    <Content />
+  </Article>
+</Base>
