@@ -4,6 +4,14 @@ import Article from '../../components/Article.astro';
 import { getCollection, render } from 'astro:content';
 import { routes } from '../../lib/routes';
 
+/**
+ * Article page, French side.
+ *
+ * The route segment is entry.data.slug, not the filename, and altEn is built from
+ * `translation` so the language switch reaches the translated article instead of
+ * dumping the reader on the writing index. A wrong translation value still builds,
+ * which is why it is the field to check when publishing.
+ */
 export async function getStaticPaths() {
   const entries = await getCollection('articles', ({ data }) => data.lang === 'fr');
   return entries.map((entry) => ({

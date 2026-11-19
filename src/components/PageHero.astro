@@ -1,5 +1,13 @@
 ---
 interface Props { kicker?: string; title: string; intro?: string; meta?: string }
+
+/**
+ * Page banner used by the inner pages: optional kicker, required title, optional
+ * intro and meta line.
+ *
+ * The home page does not use it; it has its own hero with the aurora panel.
+ * Everything is text, already localised by the caller.
+ */
 const { kicker, title, intro, meta } = Astro.props;
 ---
 <section class="page-hero" data-reveal>

@@ -4,6 +4,13 @@ import ProjectView from '../../views/Project.astro';
 import { projects, getProject } from '../../data/projects';
 import { pages } from '../../data/pages';
 
+/**
+ * Project detail page, French side. getStaticPaths walks src/data/projects, so
+ * adding an object there adds this route and its English twin.
+ *
+ * altFr and altEn are the two paths of the same project. Slugs are not translated,
+ * which is what keeps that pairing mechanical and verifiable.
+ */
 export function getStaticPaths() {
   return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }

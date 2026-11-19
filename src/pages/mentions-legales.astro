@@ -2,6 +2,14 @@
 import Base from '../layouts/Base.astro';
 import { SITE, BRAND } from '../site.config';
 
+/**
+ * Legal notice, French only, linked from both languages.
+ *
+ * altFr and altEn both point at this page so no hreflang alternate is emitted for
+ * a document that has no translation. The SIRET and address lines render only when
+ * the commercial flag is on and the fields are filled: in personal mode the site
+ * publishes no company details, which is a deliberate legal position, not a gap.
+ */
 const biz = SITE.commercial;
 const incomplete = biz && (!SITE.legal.siret || !SITE.legal.address);
 const statusFr = biz ? SITE.legal.status.fr : 'Particulier · site personnel, sans activité commerciale';

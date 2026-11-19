@@ -6,6 +6,13 @@ import SocialLinks from '../components/SocialLinks.astro';
 import { SITE } from '../site.config';
 import { copy } from '../data/copy';
 
+/**
+ * Contact page body, shared by /contact/ and /en/contact/.
+ *
+ * The direct email address is always shown next to the form: the form can be
+ * unavailable (no mail provider configured) and the address is the fallback that
+ * does not depend on the function. The availability block is commercial only.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const p = pages[lang];

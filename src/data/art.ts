@@ -1,4 +1,13 @@
-/** Illustrations SVG inline — thémées via les variables CSS, aucune requête réseau. */
+/**
+ * Inline SVG illustrations, one per project slug, drawn with the site's CSS
+ * variables so they follow the active theme.
+ *
+ * Kept as strings because they are injected with set:html inside a container that
+ * is aria-hidden: they carry no information, only texture. Nothing here loads a
+ * file or a font, so adding a project costs no request. getArt returns an empty
+ * string for an unknown slug, which leaves the container empty instead of breaking
+ * the layout.
+ */
 export const art: Record<string, string> = {
   "ollama-inference-benchmarks": `<svg viewBox="0 0 640 360" role="presentation" focusable="false">
   <g stroke="var(--line-strong)" stroke-width="1.2" fill="none">

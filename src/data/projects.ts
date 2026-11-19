@@ -3,9 +3,9 @@ export type Project = {
   name: string;
   year: string;
   kind: { fr: string; en: string };
-  /** Une phrase, pour la carte. */
+  /** One sentence, for the card. */
   summary: { fr: string; en: string };
-  /** Accroche de la page détail. */
+  /** Lead line of the detail page. */
   pitch: { fr: string; en: string };
   problem: { fr: string; en: string };
   built: { fr: string; en: string };
@@ -13,22 +13,33 @@ export type Project = {
   stack: string[];
   url?: string;
   status: 'public' | 'wip';
+  /** Affiché quand le code n'est pas consultable (dépôt privé). */
+  source?: { fr: string; en: string };
   featured?: boolean;
-  /** Captures et graphiques réellement présents dans le dépôt public. */
+  /**
+   * Captures and charts that exist in the public repository, and nowhere else.
+   * width and height are mandatory: they reserve the box before the image loads,
+   * so the page does not shift. `src` is a path under public/media, not an import.
+   */
   media?: Array<{
     src: string;
     alt: { fr: string; en: string };
     caption: { fr: string; en: string };
     width: number;
     height: number;
-    /** 'light' pour les visuels conçus sur fond clair (graphiques générés). */
+    /** 'light' for visuals drawn on a light background (generated charts). */
     tone?: 'light';
   }>;
 };
 
 /**
- * Projets affichés sur le site.
- * Règle : uniquement des dépôts publics et vérifiables. Aucun chiffre inventé.
+ * Projects displayed on the site.
+ * Rule: public, verifiable repositories only. No invented numbers.
+ *
+ * Array order is display order, and it is also the ring followed by the "next
+ * project" link at the bottom of a project page, so reordering moves links.
+ * `featured` selects the three cards shown on the home page; the index lists them
+ * all in this order.
  */
 export const projects: Project[] = [
   {
@@ -294,6 +305,101 @@ export const projects: Project[] = [
     url: 'https://github.com/TKonate',
     status: 'wip',
     featured: true,
+  },
+  {
+    slug: 'traversal-android',
+    name: 'Traversal — Android',
+    year: '2026',
+    kind: { fr: 'Jeu · Android', en: 'Game · Android' },
+    summary: {
+      fr: 'Le jeu de stratégie 3D Traversal porté sur Android : moteur de règles en Kotlin pur, IA bornée par un budget de temps.',
+      en: 'The 3D strategy board game Traversal brought to Android: a pure-Kotlin rules engine and a time-bounded AI.',
+    },
+    pitch: {
+      fr: "Étude personnelle, non officielle et sans affiliation : les règles viennent du livret publié, le moteur est testé seul, et l'interface Compose ne contient aucune logique de jeu.",
+      en: 'A personal, unofficial study with no affiliation: the rules come from the published rulebook, the engine is tested on its own, and the Compose UI holds no game logic.',
+    },
+    problem: {
+      fr: "Une position offre environ 3 000 actions légales. Le minimax exact est donc hors de portée, et la première version du moteur avait fini par s'inventer des règles pour que la recherche tienne dans le temps imparti. Le problème réel n'était pas la profondeur de calcul, mais la fidélité aux règles et la tenue du temps de réponse.",
+      en: 'A position offers roughly 3,000 legal actions, so exact minimax is out of reach. The first version of the engine ended up inventing its own rules so the search would fit in the time available. The real problem was not search depth, but fidelity to the rules and a predictable response time.',
+    },
+    built: {
+      fr: "Un moteur de règles en Kotlin/JVM pur, couvert par 51 tests, et une application Compose qui se contente d'afficher l'état et de transmettre les appuis, couverte par 29 tests Robolectric. L'APK pèse 9,8 Mo. L'aperçu de plateau ci-dessous est rendu par le moteur, pas capturé dans l'application.",
+      en: 'A pure Kotlin/JVM rules engine covered by 51 tests, plus a Compose app that only renders state and forwards taps, covered by 29 Robolectric tests. The APK weighs 9.8 MB. The board preview below is rendered by the engine, not captured from the running app.',
+    },
+    highlights: {
+      fr: [
+        "IA bornée : budget de temps dur par coup, approfondissement itératif qui conserve la dernière profondeur terminée, faisceau étroit avec les captures traitées d'abord.",
+        "Échelle de difficulté mesurée, pas supposée : la profondeur 3 vaut −6 Elo pour 5,7 fois plus de temps par coup. Le levier restant est l'évaluation, pas la profondeur.",
+        "Graphismes entièrement procéduraux en Compose : aucune ressource du jeu d'origine n'est copiée.",
+      ],
+      en: [
+        'Bounded AI: a hard time budget per move, iterative deepening that keeps the last completed depth, and a narrow beam that looks at captures first.',
+        'A measured difficulty ladder, not an assumed one: depth 3 scored −6 Elo for 5.7× the time per move. The remaining lever is evaluation, not depth.',
+        'All artwork is procedural in Compose: no asset from the original game is copied.',
+      ],
+    },
+    stack: ['Kotlin', 'Jetpack Compose', 'Gradle', 'JUnit', 'Robolectric'],
+    status: 'wip',
+    source: {
+      fr: "Code privé pour l'instant. Publication envisagée plus tard, après vérification des droits sur le jeu.",
+      en: 'Code private for now. Publishing later is under consideration, once the rights around the game are checked.',
+    },
+    media: [
+      {
+        src: '/media/traversal-android/board-preview.png',
+        alt: {
+          fr: "Vue isométrique d'un plateau de jeu en blocs olive et brun, à plusieurs niveaux : cinq pions sombres à symboles blancs d'un côté, six pions dorés à symboles jaunes de l'autre, certains marqués d'un point rouge.",
+          en: 'Isometric view of a multi-level board made of olive and brown blocks: five dark tokens with white symbols on one side, six golden tokens with yellow symbols on the other, some marked with a red dot.',
+        },
+        caption: {
+          fr: "Aperçu rendu par le moteur (projection isométrique d'une position réelle), pas une capture de l'application.",
+          en: 'Preview rendered by the engine (isometric projection of a real position), not a screenshot of the app.',
+        },
+        width: 1180,
+        height: 900,
+      },
+    ],
+  },
+  {
+    slug: 'cadence',
+    name: 'Cadence',
+    year: '2026',
+    kind: { fr: 'Application · Android', en: 'App · Android' },
+    summary: {
+      fr: "Application Android qui parle directement à une montre Garmin en BLE, sans passer par Garmin Connect : les données d'entraînement restent sur le téléphone.",
+      en: 'An Android app that talks to a Garmin watch directly over BLE, without Garmin Connect: training data stays on the phone.',
+    },
+    pitch: {
+      fr: "Un protocole constructeur parlé en direct, des métriques calculées localement, et un moteur de mesure dont les limites sont écrites noir sur blanc.",
+      en: 'A vendor protocol spoken directly, metrics computed locally, and a measurement engine whose limits are written down plainly.',
+    },
+    problem: {
+      fr: "Lire ses données de montre suppose aujourd'hui de passer par le compte du constructeur. Pour un suivi personnalisé, ce détour n'a pas de sens : la source des données de santé, c'est la montre, et rien n'oblige le cloud à s'intercaler.",
+      en: "Reading your own watch data means going through the vendor's account today. For personal tracking that detour makes no sense: the source of the health data is the watch, and nothing requires the cloud in between.",
+    },
+    built: {
+      fr: "Phase 0 : moteur de métriques en Python sans dépendance, 11 tests, exécuté sur un historique réel et comparé aux valeurs du constructeur. Phase 1 : squelette Android en Compose + Room, quatre écrans, import de fichiers, graphes dessinés en Canvas, APK compilé et tests au vert. Phase 2, en cours : le transport BLE (scan, appairage, framing, synchronisation de l'heure).",
+      en: 'Phase 0: a dependency-free metrics engine in Python, 11 tests, run against real history and compared with the vendor values. Phase 1: an Android skeleton in Compose + Room, four screens, file import, Canvas charts, a built APK and green tests. Phase 2, in progress: the BLE transport (scan, pairing, framing, time sync).',
+    },
+    highlights: {
+      fr: [
+        "Chaîne de mesure comparée au constructeur, réserves comprises : l'archive utilisée est incomplète, donc le moteur est du bon ordre de grandeur mais pas validé.",
+        'Moteur de calcul sans aucune dépendance externe : Python standard, lisible et rejouable hors application.',
+        "Transport bâti sur le protocole librement documenté par le projet Gadgetbridge, ce qui impose la licence AGPL-3.0 au dépôt.",
+      ],
+      en: [
+        'The measurement chain was compared with the vendor, caveats included: the archive used is incomplete, so the engine is in the right ballpark but not validated.',
+        'The compute engine has no external dependency: plain Python, readable and replayable outside the app.',
+        'The transport builds on the protocol documented by the Gadgetbridge project, which puts the repository under AGPL-3.0.',
+      ],
+    },
+    stack: ['Kotlin', 'Jetpack Compose', 'Room', 'Python', 'BLE'],
+    status: 'wip',
+    source: {
+      fr: "Code privé pour l'instant (données de santé personnelles dans l'historique de test). Publication envisagée plus tard.",
+      en: 'Code private for now (personal health data in the test history). Publishing later is under consideration.',
+    },
   },
 ];
 

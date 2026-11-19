@@ -5,6 +5,13 @@ import PageHero from '../components/PageHero.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import { SITE } from '../site.config';
 
+/**
+ * Project index body, shared by /projets/ and /en/projects/.
+ *
+ * Order is the order of src/data/projects, unmodified: the featured projects are
+ * not promoted here, unlike on the home page. The count in the banner is computed
+ * from the array rather than written in the copy.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const p = pages[lang];

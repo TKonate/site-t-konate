@@ -2,6 +2,22 @@
 import { SITE } from '../site.config';
 import { copy } from '../data/copy';
 
+/**
+ * Contact form and its submit handler.
+ *
+ * The handler posts JSON to /api/contact (functions/api/contact.ts). When that
+ * function answers 503, it means RESEND_API_KEY is not configured, and the form
+ * falls back to a mailto link carrying the typed message: the site keeps working
+ * without the mail provider, and no message is lost silently.
+ *
+ * Two fields are not user-facing. `website` is a honeypot, hidden from assistive
+ * tech and off the tab order; the server drops anything that fills it. `lang`
+ * travels with the payload so the email is labelled with the language of the
+ * page the visitor used.
+ *
+ * Labels come from copy[lang].contact.form and reach the inline script through
+ * define:vars, so the script never fetches a translation.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const f = copy[lang].contact.form;

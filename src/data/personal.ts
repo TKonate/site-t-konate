@@ -1,4 +1,10 @@
-/** Contenu propre au mode « portfolio personnel » (commercial: false). */
+/**
+ * Copy for personal mode (SITE.commercial = false): metadata and hero only.
+ *
+ * The published mode today. The home page reads `hero` and `contact` from here
+ * instead of src/data/copy.ts, and the two index pages read `meta`. The keys
+ * mirror the commercial file for the fields that both modes render.
+ */
 export const personal = {
   fr: {
     meta: {

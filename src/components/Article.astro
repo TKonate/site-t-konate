@@ -1,4 +1,12 @@
 ---
+/**
+ * Layout of a single article: meta line, title, lead, the rendered Markdown
+ * through the default slot, and a back link.
+ *
+ * Presentation only. It receives strings that are already localised and a
+ * `dateLabel` that the page formatted, because the locale of the date belongs to
+ * the language of the route, not to this component.
+ */
 interface Props {
   title: string;
   lead: string;

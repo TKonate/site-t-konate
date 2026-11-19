@@ -4,6 +4,21 @@ import { projects, type Project } from '../data/projects';
 import { routes } from '../lib/routes';
 import { getArt } from '../data/art';
 
+/**
+ * Project detail body, shared by /projets/<slug>/ and /en/projects/<slug>/.
+ *
+ * The Project object arrives as a prop from getStaticPaths, which reads the same
+ * src/data/projects array used by the index: the page cannot describe a project
+ * that the index does not list.
+ *
+ * "Next project" follows array order and wraps with a modulo, so the last project
+ * points back at the first instead of ending the visit.
+ *
+ * Projects with a `media` array also render a figure block above the prose. Those
+ * captures live in public/media and come from the public repository, with width
+ * and height so the box is reserved before the image loads; a project without
+ * media simply has no block.
+ */
 interface Props { project: Project; lang: 'fr' | 'en' }
 const { project, lang } = Astro.props;
 const p = pages[lang].project;
@@ -22,12 +37,17 @@ const next = projects[(idx + 1) % projects.length];
           <a class="btn btn-primary" href={project.url} target="_blank" rel="noopener noreferrer">{p.repo} ↗</a>
         </p>
       )}
+      {!project.url && project.source && (
+        <p class="source-note">{project.source[lang]}</p>
+      )}
     </div>
   </header>
 
   <div class="wrap project-body">
     <div class="project-main">
-    <div class="art project-art" aria-hidden="true" set:html={getArt(project.slug)}></div>
+    {getArt(project.slug) && (
+      <div class="art project-art" aria-hidden="true" set:html={getArt(project.slug)}></div>
+    )}
 
     {project.media && project.media.length > 0 && (
       <section class="block media-block" data-reveal>

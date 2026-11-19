@@ -4,6 +4,11 @@ import ProjectView from '../../../views/Project.astro';
 import { projects } from '../../../data/projects';
 import { pages } from '../../../data/pages';
 
+/**
+ * Project detail page, English side. Same data and same slugs as
+ * /projets/<slug>/: only the section prefix is translated, so the hreflang pair
+ * cannot drift from the French route.
+ */
 export function getStaticPaths() {
   return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }

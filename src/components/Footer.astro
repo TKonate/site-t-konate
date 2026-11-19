@@ -2,10 +2,19 @@
 import { SITE, BRAND, STATUS_LINE } from '../site.config';
 import { copy } from '../data/copy';
 
+/**
+ * Site footer: brand and status line, copyright, legal, GitHub and LinkedIn.
+ *
+ * No navigation and no language switch: both belong to the header, and
+ * duplicating them here would give two tab stops per destination.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const t = copy[lang];
 const year = new Date().getFullYear();
+// The legal notice is not translated: both languages reach the same French page.
+// Kept as an explicit pair so a translation can be wired here without touching
+// the markup.
 const legalHref = lang === 'fr' ? '/mentions-legales/' : '/mentions-legales/';
 ---
 <footer class="footer">

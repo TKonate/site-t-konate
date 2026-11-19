@@ -1656,3 +1656,13 @@ main:focus {
   border-top-color: rgba(13, 17, 23, 0.12);
   padding: 12px 2px 0;
 }
+
+.source-note {
+  margin-top: 20px;
+  max-width: 60ch;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  border-left: 2px solid var(--line-strong);
+  padding-left: 14px;
+}

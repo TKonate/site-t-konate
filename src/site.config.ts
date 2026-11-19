@@ -1,12 +1,17 @@
 /**
- * Configuration unique du site.
+ * Single source of site identity and of the mode switch.
  *
- * `commercial: false` → portfolio technique personnel.
- *   Aucune offre de service, aucun statut d'entreprise : publié sans SIRET.
+ * `commercial: false` means a personal technical portfolio: no service offer, no
+ * company status, published without a SIRET.
  *
- * `commercial: true` → vitrine d'entreprise (Polaris).
- *   Active la section Studio, la méthode, le statut légal et les mentions complètes.
- *   À basculer le jour où le SIRET existe — c'est la seule ligne à changer.
+ * `commercial: true` means a company showcase (Polaris): it turns on the Studio
+ * section, the method, the legal status and the full legal notice. Flip it the day
+ * the SIRET exists; it is the only line that needs to change.
+ *
+ * `url` names the apex, not www. The static site is served from www.t-konate.dev
+ * while the apex answers 301 to www (decision D16, deploy/cloudflare/). Every
+ * canonical, hreflang and sitemap URL is derived from this value, so it is the one
+ * place where that choice is made.
  */
 export const SITE = {
   commercial: false,
@@ -25,13 +30,14 @@ export const SITE = {
 
   legal: {
     status: { fr: 'Auto-entrepreneur · code APE 6201Z', en: 'Sole trader · APE code 6201Z' },
-    // Renseigner avant de passer commercial à true.
+    // Fill both in before switching commercial to true; the legal notice shows a
+    // warning while they are empty.
     siret: '',
     address: '',
   },
 } as const;
 
-/** Nom affiché : la marque en mode entreprise, la personne sinon. */
+/** Displayed name: the brand in commercial mode, the person otherwise. */
 export const BRAND = SITE.commercial ? SITE.brandBusiness : SITE.owner;
 
 export const TAGLINE = SITE.commercial

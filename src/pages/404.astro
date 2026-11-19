@@ -1,6 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import { routes } from '../lib/routes';
+
+/**
+ * 404 page, French only. The English sentence is inline below so a visitor
+ * arriving from either language gets an explanation, without a second page.
+ *
+ * altFr and altEn both name /404: declaring the same counterpart for both
+ * languages stops the language switch from sending a lost visitor to a live page.
+ */
 ---
 <Base
   lang="fr"

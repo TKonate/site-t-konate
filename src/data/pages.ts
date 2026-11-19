@@ -1,11 +1,18 @@
-/** Libellés des pages intérieures (index projets, page projet, à propos, contact). */
+/**
+ * Labels for the inner pages: project index, project page, about, contact.
+ *
+ * `count` is a function because the two languages do not pluralise the same way,
+ * and `toolbox` sits outside this object because it lists technologies rather than
+ * interface wording. Section names are shared by the page banner and the header
+ * navigation, so a rename here changes both.
+ */
 export const pages = {
   fr: {
     projects: {
       kicker: 'Travaux',
       title: 'Projets',
       intro:
-        "Six projets, chacun avec sa page : le problème de départ, ce que j'ai réellement construit, et les points techniques qui ont demandé un arbitrage. Le code est public, vous pouvez vérifier plutôt que me croire.",
+        "Huit projets, chacun avec sa page : le problème de départ, ce que j'ai réellement construit, et les points techniques qui ont demandé un arbitrage. La plupart des dépôts sont publics, deux sont encore privés et le disent clairement.",
       count: (n: number) => `${n} projets`,
     },
     project: {
@@ -52,7 +59,7 @@ export const pages = {
       kicker: 'Work',
       title: 'Projects',
       intro:
-        'Six projects, each with its own page: the original problem, what I actually built, and the technical points that required a decision. The code is public, so check it rather than take my word.',
+        'Eight projects, each with its own page: the original problem, what I actually built, and the technical points that required a decision. Most repositories are public, two are still private and say so plainly.',
       count: (n: number) => `${n} projects`,
     },
     project: {

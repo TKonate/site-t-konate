@@ -3,6 +3,15 @@ import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { routes } from '../../lib/routes';
 
+/**
+ * Writing index, French side: the `articles` collection filtered on
+ * data.lang === 'fr', newest first.
+ *
+ * Dates are formatted here with fr-FR rather than stored preformatted in the
+ * frontmatter, so one `date` field serves both languages. The English twin is the
+ * same page with en-GB; the articles themselves live in Markdown, this file only
+ * lists them.
+ */
 const articles = (await getCollection('articles', ({ data }) => data.lang === 'fr')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );

@@ -4,6 +4,13 @@ import Article from '../../../components/Article.astro';
 import { getCollection, render } from 'astro:content';
 import { routes } from '../../../lib/routes';
 
+/**
+ * Article page, English side. altFr is built from `translation`, the French slug,
+ * so the switch reaches the translated article rather than the index.
+ *
+ * The route segment is entry.data.slug: English and French filenames differ, and
+ * the URL follows the declared slug, not the file name.
+ */
 export async function getStaticPaths() {
   const entries = await getCollection('articles', ({ data }) => data.lang === 'en');
   return entries.map((entry) => ({

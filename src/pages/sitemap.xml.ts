@@ -3,6 +3,17 @@ import { getCollection } from 'astro:content';
 import { projects } from '../data/projects';
 import { SITE } from '../site.config';
 
+/**
+ * /sitemap.xml, emitted as a static route at build time.
+ *
+ * Each entry is a fr/en pair: both URLs are written, each carrying the two
+ * xhtml:link alternates. Pairs are listed here rather than read from
+ * src/lib/routes.ts because the sitemap also needs the per-project and
+ * per-article paths, which come from the data file and the content collection.
+ *
+ * Not covered: /404, which is not meant to be indexed. The legal notice is
+ * present but appears once, without alternates, since it has no translation.
+ */
 const base = SITE.url.replace(/\/$/, '');
 
 type Pair = { fr: string; en: string };
@@ -20,6 +31,8 @@ export const GET: APIRoute = async () => {
       en: `/en/projects/${p.slug}/`,
     })),
     ...articles
+      // The French collection drives the pairs: each entry carries the English
+      // slug in `translation`, which is the alternate URL the sitemap needs.
       .filter((a) => a.data.lang === 'fr')
       .map((a) => ({
         fr: `/ecrits/${a.data.slug}/`,
@@ -30,12 +43,16 @@ export const GET: APIRoute = async () => {
 
   const urls = pairs
     .flatMap((pair) => {
+      // Same path in both languages means a single untranslated page (the legal
+      // notice). Declaring alternates there would point crawlers at a page that
+      // does not exist in the other language.
       const alts =
         pair.fr === pair.en
           ? ''
           : `\n    <xhtml:link rel="alternate" hreflang="fr" href="${base}${pair.fr}"/>` +
             `\n    <xhtml:link rel="alternate" hreflang="en" href="${base}${pair.en}"/>`;
       return [pair.fr, pair.en]
+        // One <url> per distinct path, so the shared path is not listed twice.
         .filter((v, i, arr) => arr.indexOf(v) === i)
         .map(
           (path) =>

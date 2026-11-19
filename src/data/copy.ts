@@ -1,3 +1,15 @@
+/**
+ * Copy for commercial mode (SITE.commercial = true): brand meta, hero, services,
+ * method, contact labels and forms, footer.
+ *
+ * None of it is rendered while the flag is false: the home page and the page
+ * metadata then read src/data/personal.ts. The keys the pages read conditionally
+ * (hero, contact, meta) keep the same shape in both files, so flipping the flag
+ * needs no code change.
+ *
+ * Strings only. These values are interpolated into JSX expressions, so any markup
+ * written here would be escaped and shown literally.
+ */
 export type Lang = 'fr' | 'en';
 
 export const copy = {

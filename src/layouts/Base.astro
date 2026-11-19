@@ -1,4 +1,19 @@
 ---
+/**
+ * Document shell for every page: head metadata, canonical and hreflang links,
+ * the language redirect, and the theme, reveal and scroll scripts.
+ *
+ * It knows no route. Each page passes altFr and altEn, the paths of the same
+ * page in both languages, because only the page can know its counterpart: a
+ * project slug or an article translation is not derivable from the current URL.
+ * Routes live in src/lib/routes.ts.
+ *
+ * Canonical and alternate URLs are built from SITE.url plus the request path,
+ * never from Astro.url.origin: the site is served from www while the canonical
+ * names the apex, which answers 301 to www (decision D16). The inline scripts
+ * resolve their targets from these same links, so the head has to be complete
+ * before the redirect runs.
+ */
 import '../styles/tokens.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -9,13 +24,15 @@ interface Props {
   lang: 'fr' | 'en';
   title: string;
   description: string;
-  /** Chemin de la même page dans l'autre langue. */
+  /** Path of this page in the other language. */
   altFr: string;
   altEn: string;
 }
 const { lang, title, description, altFr, altEn } = Astro.props;
 const base = SITE.url.replace(/\/$/, '');
 const canonical = base + Astro.url.pathname;
+// x-default follows French: it is the default locale and the only one served
+// without a prefix, so a visitor whose language matches neither lands on FR.
 const frUrl = base + altFr;
 const enUrl = base + altEn;
 ---

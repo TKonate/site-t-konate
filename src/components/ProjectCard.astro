@@ -4,6 +4,16 @@ import { routes } from '../lib/routes';
 import { pages } from '../data/pages';
 import { getArt } from '../data/art';
 
+/**
+ * Project card, shared by the home page and the project index.
+ *
+ * The cover link is a second hit area over the whole card. It is aria-hidden and
+ * carries tabindex="-1" so it stays out of the accessibility tree and the tab
+ * order: the title link remains the single announced destination.
+ *
+ * The illustration is inline SVG from src/data/art, drawn with CSS variables, so
+ * a card costs no network request and follows the active theme.
+ */
 interface Props { project: Project; lang: 'fr' | 'en'; index?: number; variant?: 'default' | 'feature' }
 const { project, lang, index, variant = 'default' } = Astro.props;
 const isFeature = variant === 'feature';

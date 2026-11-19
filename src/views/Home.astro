@@ -9,6 +9,18 @@ import ProjectCard from '../components/ProjectCard.astro';
 import ContactForm from '../components/ContactForm.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 
+/**
+ * Home page body, shared by / and /en/.
+ *
+ * Two content modes, chosen by SITE.commercial. When false, the hero and the
+ * contact intro come from src/data/personal and the Studio and Method sections
+ * are not rendered at all; when true, copy comes from src/data/copy and those
+ * sections appear. The personal mode is the published one today.
+ *
+ * The first featured project is rendered as the wide card, the next ones in a
+ * two column grid. The counter link uses projects.length, so it cannot disagree
+ * with the data file.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const t = copy[lang];

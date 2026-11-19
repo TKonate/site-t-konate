@@ -6,11 +6,21 @@ import { projects } from '../data/projects';
 import PageHero from '../components/PageHero.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 
+/**
+ * About page body, shared by /a-propos/ and /en/about/.
+ *
+ * The first paragraph of the shared bio is the page intro, rendered by PageHero,
+ * so the prose block starts at body[1]. The two positioning paragraphs below stay
+ * inline because they interpolate projects.length and would drift if the number
+ * were hard-coded in src/data.
+ */
 interface Props { lang: 'fr' | 'en' }
 const { lang } = Astro.props;
 const t = copy[lang];
 const p = pages[lang];
 const box = toolbox[lang];
+const publicCount = projects.filter((x) => x.status === 'public').length;
+const wipCount = projects.length - publicCount;
 const groups: Array<[string, readonly string[]]> = [
   [p.about.toolbox.langages, box.langages],
   [p.about.toolbox.infra, box.infra],
@@ -32,8 +42,8 @@ const groups: Array<[string, readonly string[]]> = [
       </p>
       <p>
         {lang === 'fr'
-          ? `${projects.length} projets publics, du banc de mesure de LLM locaux au système multi-agents auto-hébergé. Le code est sur GitHub : les dépôts sont vérifiables, y compris leurs tests et leur intégration continue.`
-          : `${projects.length} public projects, from local LLM benchmarking to a self-hosted multi-agent system. The code is on GitHub: the repositories are verifiable, including their tests and continuous integration.`}
+          ? `${publicCount} projets dont le code est public, du banc de mesure de LLM locaux au système multi-agents auto-hébergé, et ${wipCount} encore en cours dont le dépôt est privé. Les dépôts publics sont vérifiables, tests et intégration continue compris.`
+          : `${publicCount} projects with public code, from local LLM benchmarking to a self-hosted multi-agent system, plus ${wipCount} still in progress with a private repository. The public ones are verifiable, tests and continuous integration included.`}
       </p>
     </div>
 
