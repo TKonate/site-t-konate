@@ -45,7 +45,9 @@ const next = projects[(idx + 1) % projects.length];
 
   <div class="wrap project-body">
     <div class="project-main">
-    {getArt(project.slug) && (
+    {/* L'illustration décorative n'apparaît que s'il n'y a pas de visuel réel :
+        deux images empilées sur la même page, c'est du bruit. */}
+    {!project.media?.length && getArt(project.slug) && (
       <div class="art project-art" aria-hidden="true" set:html={getArt(project.slug)}></div>
     )}
 
