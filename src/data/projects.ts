@@ -303,7 +303,7 @@ export const projects: Project[] = [
     },
     stack: ['Astro', 'TypeScript', 'Cloudflare Pages'],
     url: 'https://github.com/TKonate',
-    status: 'wip',
+    status: 'public',
     featured: true,
   },
   {
