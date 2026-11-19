@@ -14,6 +14,16 @@ export type Project = {
   url?: string;
   status: 'public' | 'wip';
   featured?: boolean;
+  /** Captures et graphiques réellement présents dans le dépôt public. */
+  media?: Array<{
+    src: string;
+    alt: { fr: string; en: string };
+    caption: { fr: string; en: string };
+    width: number;
+    height: number;
+    /** 'light' pour les visuels conçus sur fond clair (graphiques générés). */
+    tone?: 'light';
+  }>;
 };
 
 /**
@@ -55,6 +65,36 @@ export const projects: Project[] = [
       ],
     },
     stack: ['Python', 'Typer', 'Pydantic', 'Docker', 'GitHub Actions'],
+    media: [
+      {
+        src: '/media/ollama-inference-benchmarks/2026-11-15-vps-4vcpu-throughput.svg',
+        alt: {
+          fr: 'Graphique en barres du débit en tokens par seconde, par modèle, mesuré sur un VPS à 4 vCPU.',
+          en: 'Bar chart of throughput in tokens per second per model, measured on a 4-vCPU VPS.',
+        },
+        caption: {
+          fr: 'Débit mesuré (tokens/s), VPS 4 vCPU, 2026-11-15. Graphique produit par le protocole de mesure du dépôt.',
+          en: 'Measured throughput (tokens/s), 4-vCPU VPS, 2026-11-15. Chart produced by the repository measurement protocol.',
+        },
+        width: 720,
+        height: 276,
+        tone: 'light',
+      },
+      {
+        src: '/media/ollama-inference-benchmarks/2026-11-15-vps-4vcpu-ttft.svg',
+        alt: {
+          fr: 'Graphique en barres du temps médian avant le premier token, par modèle, sur un VPS à 4 vCPU.',
+          en: 'Bar chart of median time to first token per model on a 4-vCPU VPS.',
+        },
+        caption: {
+          fr: 'Temps médian avant le premier token (TTFT), même campagne de mesure.',
+          en: 'Median time to first token (TTFT), same measurement run.',
+        },
+        width: 720,
+        height: 276,
+        tone: 'light',
+      },
+    ],
     url: 'https://github.com/TKonate/ollama-inference-benchmarks',
     status: 'public',
     featured: true,
@@ -164,6 +204,21 @@ export const projects: Project[] = [
       ],
     },
     stack: ['Python', 'pytest', 'GitHub Actions'],
+    media: [
+      {
+        src: '/media/portfolio-manager/screenshot.png',
+        alt: {
+          fr: "Capture de l'interface Portfolio Manager v1.0.0, onglet Entries : liste des entrées à gauche, métadonnées de l'entrée sélectionnée « OSINT collection pipeline » à droite.",
+          en: 'Screenshot of the Portfolio Manager v1.0.0 interface, Entries tab: entry list on the left, metadata of the selected entry "OSINT collection pipeline" on the right.',
+        },
+        caption: {
+          fr: "Onglet Entries : recherche, filtres par type, statut et domaine, et métadonnées de l'entrée sélectionnée.",
+          en: 'The Entries tab: search, filters by type, status and domain, and metadata of the selected entry.',
+        },
+        width: 1280,
+        height: 577,
+      },
+    ],
     url: 'https://github.com/TKonate/portfolio-manager',
     status: 'public',
   },

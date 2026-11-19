@@ -29,6 +29,18 @@ const next = projects[(idx + 1) % projects.length];
     <div class="project-main">
     <div class="art project-art" aria-hidden="true" set:html={getArt(project.slug)}></div>
 
+    {project.media && project.media.length > 0 && (
+      <section class="block media-block" data-reveal>
+        {project.media.map((m) => (
+          <figure class={`media-figure${m.tone === 'light' ? ' is-light' : ''}`}>
+            <img src={m.src} alt={m.alt[lang]} width={m.width} height={m.height}
+                 loading="lazy" decoding="async" />
+            <figcaption>{m.caption[lang]}</figcaption>
+          </figure>
+        ))}
+      </section>
+    )}
+
     <section class="block" data-reveal>
       <h2>{p.problem}</h2>
       <p>{project.problem[lang]}</p>

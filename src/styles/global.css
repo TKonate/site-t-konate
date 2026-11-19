@@ -1615,3 +1615,44 @@ main:focus {
   box-shadow: inset 0 0 0 1px var(--accent-focus-border);
   font-weight: 600;
 }
+
+/* --- visuels de projet (captures et graphiques du dépôt) --- */
+
+.media-block {
+  display: grid;
+  gap: 20px;
+}
+
+.media-figure {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+
+.media-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.media-figure figcaption {
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  border-top: 1px solid var(--line);
+}
+
+/* les graphiques générés sont dessinés sur fond clair : on les pose sur une surface claire */
+.media-figure.is-light {
+  background: #f7f8fa;
+  padding: 16px;
+}
+
+.media-figure.is-light figcaption {
+  color: #3d4a59;
+  border-top-color: rgba(13, 17, 23, 0.12);
+  padding: 12px 2px 0;
+}
