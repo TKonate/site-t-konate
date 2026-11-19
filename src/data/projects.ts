@@ -347,17 +347,17 @@ export const projects: Project[] = [
     },
     media: [
       {
-        src: '/media/traversal-android/board-preview.png',
+        src: '/media/traversal-android/board-3d.png',
         alt: {
-          fr: "Vue isométrique d'un plateau de jeu en blocs olive et brun, à plusieurs niveaux : cinq pions sombres à symboles blancs d'un côté, six pions dorés à symboles jaunes de l'autre, certains marqués d'un point rouge.",
-          en: 'Isometric view of a multi-level board made of olive and brown blocks: five dark tokens with white symbols on one side, six golden tokens with yellow symbols on the other, some marked with a red dot.',
+          fr: "Rendu 3D du plateau Traversal vu en plongée : cases beige, murs en blocs olive et brun, six pions sombres à symboles blancs d'un côté, six pions dorés à symboles foncés de l'autre.",
+          en: '3D render of the Traversal board seen from above: sand-coloured tiles, olive and brown block walls, six dark tokens with white symbols on one side and six golden tokens with dark symbols on the other.',
         },
         caption: {
-          fr: "Aperçu rendu par le moteur (projection isométrique d'une position réelle), pas une capture de l'application.",
-          en: 'Preview rendered by the engine (isometric projection of a real position), not a screenshot of the app.',
+          fr: "Position initiale projetée par la caméra 3D du moteur (perspective réelle, pas une capture de l'application) : 12 pièces, graine fixe.",
+          en: 'Initial position projected by the engine 3D camera (real perspective, not an app screenshot): 12 pieces from a fixed seed.',
         },
-        width: 1180,
-        height: 900,
+        width: 1600,
+        height: 1200,
       },
     ],
   },
@@ -395,6 +395,21 @@ export const projects: Project[] = [
       ],
     },
     stack: ['Kotlin', 'Jetpack Compose', 'Room', 'Python', 'BLE'],
+    media: [
+      {
+        src: '/media/cadence/load-chart.svg',
+        alt: {
+          fr: "Graphique de la charge aiguë (7 jours) et chronique (42 jours) calculée par le moteur : de longues semaines plates à zéro, puis une remontée sur les dernières semaines.",
+          en: 'Chart of acute (7-day) and chronic (42-day) load computed by the engine: long flat weeks at zero, then a rise over the last weeks.',
+        },
+        caption: {
+          fr: "Sortie du moteur de métriques sur l'archive réelle, semaines sans données comprises. C'est précisément la limite documentée : tant que l'historique reste incomplet, le moteur est dans le bon ordre de grandeur mais n'est pas validé.",
+          en: 'Output of the metrics engine on the real archive, empty weeks included. This is exactly the documented limit: while the history stays incomplete, the engine is in the right ballpark but not validated.',
+        },
+        width: 960,
+        height: 460,
+      },
+    ],
     status: 'wip',
     source: {
       fr: "Code privé pour l'instant (données de santé personnelles dans l'historique de test). Publication envisagée plus tard.",
