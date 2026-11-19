@@ -135,6 +135,52 @@ export const art: Record<string, string> = {
   <text x="138" y="270" font-family="monospace" font-size="13" fill="var(--ink-soft)">FR</text>
   <text x="196" y="270" font-family="monospace" font-size="13" fill="var(--ink-mute)">EN</text>
 </svg>`,
+  "traversal-android": `<svg viewBox="0 0 640 360" role="presentation" focusable="false">
+  <g fill="none" stroke="var(--line-strong)" stroke-width="1.1" opacity=".55">
+    <path d="M320 60 470 135 320 210 170 135Z"/>
+    <path d="M170 135v70l150 75v-70Z"/>
+    <path d="M470 135v70l-150 75v-70Z"/>
+    <path d="M245 97.5 395 172.5M395 97.5 245 172.5"/>
+    <path d="M245 205v35l75 37.5v-35Z"/>
+    <path d="M395 205v35l-75 37.5v-35Z"/>
+  </g>
+  <g stroke="var(--accent)" stroke-width="1.6" fill="none" opacity=".75">
+    <path d="M320 60 470 135 320 210 170 135Z"/>
+  </g>
+  <g fill="var(--accent)" opacity=".85">
+    <ellipse cx="245" cy="120" rx="13" ry="8"/>
+    <ellipse cx="320" cy="157" rx="13" ry="8"/>
+    <ellipse cx="245" cy="230" rx="13" ry="8"/>
+  </g>
+  <g fill="var(--accent-2)" opacity=".7">
+    <ellipse cx="395" cy="120" rx="13" ry="8"/>
+    <ellipse cx="395" cy="230" rx="13" ry="8"/>
+    <ellipse cx="320" cy="88" rx="13" ry="8"/>
+  </g>
+</svg>`,
+  "cadence": `<svg viewBox="0 0 640 360" role="presentation" focusable="false">
+  <g fill="none" stroke="var(--line-strong)" stroke-width="1.1" opacity=".5">
+    <path d="M60 300h520"/>
+  </g>
+  <g fill="var(--accent)" opacity=".18">
+    <rect x="90" y="214" width="34" height="86" rx="5"/>
+    <rect x="140" y="176" width="34" height="124" rx="5"/>
+    <rect x="190" y="238" width="34" height="62" rx="5"/>
+    <rect x="240" y="150" width="34" height="150" rx="5"/>
+    <rect x="290" y="196" width="34" height="104" rx="5"/>
+  </g>
+  <g transform="translate(452 176)" fill="none">
+    <circle r="86" stroke="var(--line-strong)" stroke-width="1.4" opacity=".7"/>
+    <circle r="62" stroke="var(--line-strong)" stroke-width="1" opacity=".45"/>
+    <path d="M-86 0a86 86 0 0 1 74-85" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M0 0-34-44" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M0 0 46 12" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
+    <circle r="5" fill="var(--accent)"/>
+  </g>
+  <g stroke="var(--ink-mute)" stroke-width="1.2" opacity=".45">
+    <path d="M366 258h172"/>
+  </g>
+</svg>`,
 };
 
 export const getArt = (slug: string) => art[slug] ?? '';
